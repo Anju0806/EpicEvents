@@ -5,8 +5,8 @@ const Product = require('../models/Product');
 const Stall = require('../models/Stall');
 const User = require('../models/User');
 const Event = require('../models/Event');
-const { generateProduct } = require('./generateProductData');
-const sampleUsers = require('./userSeeds.json');
+const { generateProduct }  = require('./generateProductData');
+const  sampleUsers  = require('./userSeeds.json');
 
 // Start the seeding runtime timer
 console.time('seeding..');
@@ -15,6 +15,7 @@ console.time('seeding..');
 connection.once('open', async () => {
     try {
         // Delete the entries in the collections
+        console.time('delete product..');
         await Product.deleteMany({});
         await Stall.deleteMany({});
         await Event.deleteMany({});
@@ -24,17 +25,17 @@ connection.once('open', async () => {
         const sampleEvents = [];
         for (let i = 0; i < 10; i++) {
             const event = new Event({
-                title: faker.random.words(3),
+                title: faker.word.sample(3),
                 description: faker.lorem.sentence(),
-                location: faker.address.city(),
+                location: faker.location.city(),
                 start_date: faker.date.future(),
                 end_date: faker.date.future(),
                 start_time: faker.date.future(),
                 end_time: faker.date.future(),
-                ticketInformation: faker.lorem.words(5),
-                max_stalls: faker.random.number({ min: 1, max: 50 }),
-                createdBy: mongoose.Types.ObjectId(), 
-                image: faker.image.imageUrl(),
+                ticketInformation: faker.word.sample(5),
+                max_stalls: faker.number.int({ min: 1, max: 50 }),
+                createdBy: faker.database.mongodbObjectId(),
+                image: faker.image.url(),
             });
             sampleEvents.push(event);
         }
@@ -42,12 +43,12 @@ connection.once('open', async () => {
         const sampleStalls = [];
         for (let i = 0; i < 10; i++) {
             const stall = new Stall({
-                title: faker.company.companyName(),
+                title: faker.company.name(),
                 description: faker.lorem.sentence(),
-                number: faker.random.number({ min: 1, max: 100 }),
-                contact_number: faker.phone.phoneNumber(),
-                image: faker.image.imageUrl(),
-                owner: mongoose.Types.ObjectId(), 
+                number: faker.number.int({ min: 1, max: 100 }),
+                contact_number: faker.phone.number(),
+                image: faker.image.url(),
+                owner: faker.database.mongodbObjectId()
             });
             sampleStalls.push(stall);
         }

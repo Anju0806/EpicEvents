@@ -8,46 +8,55 @@
   {
     "username": "Max Kanat-Alexander",
     "email": "mkanatalexander@gmail.com",
-    "password": "password02"
+    "password": "password02",
+    "isAdmin":"false"
   },
   {
     "username": "Why The Lucky Stiff",
     "email": "wtls@gmail.com",
-    "password": "password03"
+    "password": "password03",
+    "isAdmin":"false"
   },
   {
     "username": "Kent Beck",
     "email": "kbeck@gmail.com",
-    "password": "password04"
+    "password": "password04",
+    "isAdmin":"false"
   },
   {
     "username": "Edward V. Berard",
     "email": "evberard@gmail.com",
-    "password": "password05"
+    "password": "password05",
+    "isAdmin":"false"
   },
   {
     "username": "Alan Kay",
     "email": "akay@gmail.com",
-    "password": "password06"
+    "password": "password06",
+    "isAdmin":"false"
   },
   {
     "username": "C.A.R. Hoare",
     "email": "choare@gmail.com",
-    "password": "password07"
+    "password": "password07",
+    "isAdmin":"false"
   },
   {
     "username": "David Thomas",
     "email": "dthomas@gmail.com",
-    "password": "password08"
+    "password": "password08",
+    "isAdmin":"false"
   },
   {
     "username": "Donald Knuth",
     "email": "dknuth@gmail.com",
-    "password": "password09"
+    "password": "password09",
+    "isAdmin":"false"
   },
   {
     "username": "Lernantino",
     "email": "lernantino@gmail.com",
-    "password": "password10"
+    "password": "password10",
+    "isAdmin":"false"
   }
 ]
