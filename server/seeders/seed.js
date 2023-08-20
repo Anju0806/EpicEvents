@@ -5,7 +5,7 @@ const Product = require('../models/Product');
 const Stall = require('../models/Stall');
 const User = require('../models/User');
 const Event = require('../models/Event');
-const { generateProduct }  = require('./generateProductData');
+const sampleProducts  = require('./productSeeds.json');
 const  sampleUsers  = require('./userSeeds.json');
 
 // Start the seeding runtime timer
@@ -52,13 +52,6 @@ connection.once('open', async () => {
             });
             sampleStalls.push(stall);
         }
-
-         // Sample data for products
-         const sampleProducts = [];
-         for (let i = 0; i < 50; i++) {
-             const product = generateProduct();
-             sampleProducts.push(product);
-         }
 
         // Insert the samples into the database
         await Stall.insertMany(sampleStalls);
