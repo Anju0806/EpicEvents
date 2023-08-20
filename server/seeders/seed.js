@@ -1,5 +1,5 @@
 // seed.js
-const faker = require('faker');
+const { faker } = require('@faker-js/faker');
 const connection = require('../config/connection');
 const Product = require('../models/Product');
 const Stall = require('../models/Stall');
@@ -33,7 +33,7 @@ connection.once('open', async () => {
                 end_time: faker.date.future(),
                 ticketInformation: faker.lorem.words(5),
                 max_stalls: faker.random.number({ min: 1, max: 50 }),
-                // createdBy: mongoose.Types.ObjectId(), 
+                createdBy: mongoose.Types.ObjectId(), 
                 image: faker.image.imageUrl(),
             });
             sampleEvents.push(event);
@@ -47,7 +47,7 @@ connection.once('open', async () => {
                 number: faker.random.number({ min: 1, max: 100 }),
                 contact_number: faker.phone.phoneNumber(),
                 image: faker.image.imageUrl(),
-                //owner: mongoose.Types.ObjectId(), 
+                owner: mongoose.Types.ObjectId(), 
             });
             sampleStalls.push(stall);
         }
