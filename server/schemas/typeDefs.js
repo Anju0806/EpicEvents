@@ -62,7 +62,7 @@ const typeDefs = gql`
     userByUsername(username: String!): User
     userByEmail(email: String!): User
 
-    events: [Event]
+    events: [Event]!
     event(eventId:ID!):Event
     userevents(userId:ID!):[Event] #returns all joined events of a user
 
