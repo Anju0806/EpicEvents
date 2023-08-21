@@ -19,7 +19,8 @@ const resolvers = {
     //event queries
     events: async (parent, args) => {
       /*   const params = username ? { username } : {}; */
-      return Event.find().sort({ createdAt: -1 }).populate('events stalls ');
+      //return Event.find().sort({ createdAt: -1 }).populate('events stalls ');
+      return Event.find().sort({ createdAt: -1 }).populate([{ path:'events stalls ', strictPopulate: false}]);
     },
     event: async (parent, { eventId }) => {
       return Event.findOne({ _id: eventId }).populate('createdBy stalls attendees');

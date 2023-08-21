@@ -23,8 +23,9 @@ const EventList = ({
                   className="text-light"
                   to={`/profiles/${event.createdBy}`}
                 >
-                  Created by: {event.createdBy.username} <br />
+                   {event.title} 
                   <span style={{ fontSize: '1rem' }}>
+                  <br />
                     {event.title} - {event.start_date} to {event.end_date}
                   </span>
                 </Link>
