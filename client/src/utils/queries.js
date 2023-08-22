@@ -25,7 +25,6 @@ export const QUERY_EVENTS = gql`
       start_date
       end_date
       start_time
-      max_stalls
       ticketInformation
       end_time
       

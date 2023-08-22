@@ -33,12 +33,12 @@ const typeDefs = gql`
   }
 
   type Query {
-    #user queries
-    users: [User]
+  
+    users: [User]  #user queries
     userByUsername(username: String!): User
     userByEmail(email: String!): User
-    #event queries
-    events: [Event]!
+   
+    events: [Event]! #6 upcoming events returned
     event(eventId:ID!):Event
     searchevents( search:String!, searchdate: String!, location: String!) : [Event]!
     me: User  #returns all joined events of a user
