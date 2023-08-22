@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+ const mongoose = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 // Event schema
@@ -74,14 +74,6 @@ eventSchema.virtual('attendeesCount').get(function () {
   return this.attendees.length;
 });
 
-// the virtual property upcomingEvents
-eventSchema.virtual('upcomingEvents', {
-  ref: 'Event',
-  localField: '_id',
-  foreignField: 'date',
-  options: { sort: { date: 1 } }, // Sort by date in ascending order
-  //options: { sort: { date: 1 }, limit: 5 } // Sort by date in ascending order and limit to 5 upcoming events
-});
 
 const Event = mongoose.model('Event', eventSchema);
 module.exports = Event;

@@ -8,7 +8,6 @@ const typeDefs = gql`
     password: String
     isAdmin: Boolean
     events:[Event]
-    stalls:[Stall]
   }
 
   type Event {
@@ -21,35 +20,12 @@ const typeDefs = gql`
   start_time: String
   end_time: String
   ticketInformation: String
-  max_stalls: Int
   createdBy: User
   createdAt: String
   image: String
-  stalls: [Stall]
   attendees: [User]
   attendeesCount: Int  # Virtual property
-  upcomingEvents: [Event]  # Virtual property
 }
-
-  type Product {
-    _id: ID
-    name: String
-    description: String
-  }
-
-  type Stall {
-    _id: ID
-    title: String
-    description: String
-    createdAt: String
-    number:String
-    contact_number:String
-    image:String
-    owner:User
-   # events:[Event]!
-    products:[Product]!
-
-  }
 
   type Auth {
     token: ID!
@@ -57,27 +33,15 @@ const typeDefs = gql`
   }
 
   type Query {
-
+    #user queries
     users: [User]
     userByUsername(username: String!): User
     userByEmail(email: String!): User
-
+    #event queries
     events: [Event]!
     event(eventId:ID!):Event
-    userevents(userId:ID!):[Event] #returns all joined events of a user
-
-    stalls: [Stall]
-    eventstalls(eventId:ID!):[Stall]
-    userstalls(owner:ID!):[Stall] #returns all stalls of an owner
-    stall(stallId:ID!):Stall
-
-    products: [Product]
-    product(productName: String!): Product
-    productById(productId: ID!): Product
-    productstall(stallId:ID!):[Product]
-    productevent(eventId:ID!):[Product]
-
-    me: User
+    searchevents( search:String!, searchdate: String!, location: String!) : [Event]!
+    me: User  #returns all joined events of a user
   }
 
   type Mutation {
@@ -95,9 +59,12 @@ const typeDefs = gql`
       start_time: String!,
       end_time: String!,
       ticketInformation: String!,
-      max_stalls: Int!,
-      createdBy: ID!
     ): Event
+
+    joinEvent(
+      eventId: ID!, 
+      userId: ID!
+      ): Event
 
     editEvent(
       title: String,
@@ -108,35 +75,57 @@ const typeDefs = gql`
       start_time: String,
       end_time: String,
       ticketInformation: String,
-      max_stalls: Int
+      
     ): Event
-
     deleteEvent(eventId: ID!): Event
-
-    addStall(
-      title: String!,
-      description: String!,
-      number: String!,
-      contact_number: String!,
-      owner: ID!
-    ): Stall
-
-    editStall(
-      title: String,
-      description: String,
-      number: String,
-      contact_number: String,
-      owner: ID
-    ): Stall
-
-    deleteStall(stallId: ID!): Stall
-    deleteEventStall(stallId: ID!, eventId: ID!): Event
-
-    addProduct(name: String!, description: String!): Product
-    editProduct(name: String!, description: String): Product
-    deleteStallProduct(productId: ID!, stallId: ID!): Product
   }
-
 `;
 
-module.exports = typeDefs;
+module.exports = typeDefs
+
+
+
+
+
+
+/* future development */
+
+/* type Product {
+_id: ID
+name: String
+description: String
+}
+
+type Stall {
+_id: ID
+title: String
+description: String
+createdAt: String
+number:String
+contact_number:String
+image:String
+owner:User
+# events:[Event]!
+products:[Product]!
+
+} 
+
+  stalls: [Stall]
+  eventstalls(eventId:ID!):[Stall]
+  userstalls(owner:ID!):[Stall] #returns all stalls of an owner
+  stall(stallId:ID!):Stall
+
+  products: [Product]
+  product(productName: String!): Product
+  productById(productId: ID!): Product
+  productstall(stallId:ID!):[Product]
+  productevent(eventId:ID!):[Product] */
+
+/* addStall(title: String!,description: String!,number: String!,contact_number: String!,owner: ID): Stall
+    editStall(title: String,description: String,number: String,contact_number: String,owner: ID): Stall
+    deleteStall(stallId: ID!): Stall
+    deleteEventStall(stallId: ID!, eventId: ID!): Event
+    addProduct(name: String!, description: String!): Product
+    editProduct(name: String!, description: String): Product
+    deleteStallProduct(productId: ID!, stallId: ID!): Product 
+     */
