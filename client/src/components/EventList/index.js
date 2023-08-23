@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Heading, Text, Link as ChakraLink, Button, Image } from '@chakra-ui/react';
 
 const EventList = ({
   events,
@@ -8,47 +9,65 @@ const EventList = ({
   showCreatedBy = true,
 }) => {
   if (!events.length) {
-    return <h3>No Events Yet</h3>;
+    return <Heading as="h3">No Events Yet</Heading>;
   }
 
   return (
-    <div>
-      {showTitle && <h3>{title}</h3>}
+    <Box>
+      {showTitle && <Heading as="h3">{title}</Heading>}
       {events &&
         events.map((event) => (
-          <div key={event._id} className="card mb-3">
-            <h4 className="card-header bg-primary text-light p-2 m-0">
-              {showCreatedBy ? (
-                <Link
-                  className="text-light"
-                  to={`/profiles/${event.createdBy}`}
-                >
-                   {event.title} 
-                  <span style={{ fontSize: '1rem' }}>
-                  <br />
-                    {event.title} - {event.start_date} to {event.end_date}
-                  </span>
-                </Link>
-              ) : (
-                <>
-                  <span style={{ fontSize: '1rem' }}>
-                    You created this event on {event.createdAt}
-                  </span>
-                </>
-              )} 
-            </h4>
-            <div className="card-body bg-light p-2">
-              <p>{event.description}</p>
-            </div>
-            <Link
-              className="btn btn-primary btn-block btn-squared"
-              to={`/events/${event._id}`}
-            >
-              View Details
-            </Link>
-          </div>
+          <Box
+            key={event._id}
+            borderWidth="1px"
+            borderColor="gray.300"
+            borderRadius="md"
+            p="4"
+            mb="4"
+            display="flex" 
+            alignItems="center" 
+          >
+            <Image
+              src={event.image} 
+              alt={event.title}
+              boxSize="100px"
+              mr="4"
+            />
+            
+            <Box flex="1">
+              <Heading as="h4" size="md" mb="2">
+                {showCreatedBy ? (
+                  <ChakraLink
+                    as={Link}
+                    to={`/profiles/${event.createdBy}`}
+                    color="blue.500"
+                  >
+                    {event.title}
+                  </ChakraLink>
+                ) : (
+                  <>
+                    <Text fontSize="sm">
+                      You created this event on {event.createdAt}
+                    </Text>
+                  </>
+                )}
+              </Heading>
+              <Text mb="2">
+                {event.start_date} to {event.end_date}
+              </Text>
+              <Text fontSize="md" mb="2">
+                {event.description}
+              </Text>
+              <Button as={Link} to={`/events/${event._id}`} colorScheme="blue" mr="2">
+                View Details
+              </Button>
+              <Button as={Link} to={`/joinevent/${event._id}`} colorScheme="blue">
+                Join Event
+              </Button>
+            </Box>
+          </Box>
         ))}
-    </div>
+    </Box>
   );
 };
 

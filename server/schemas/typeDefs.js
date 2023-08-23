@@ -59,6 +59,7 @@ const typeDefs = gql`
       start_time: String!,
       end_time: String!,
       ticketInformation: String!,
+      image: String
     ): Event
 
     joinEvent(

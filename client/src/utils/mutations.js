@@ -38,6 +38,27 @@ export const ADD_THOUGHT = gql`
     }
   }
 `;
+export const ADD_EVENT = gql`
+mutation addEvent($title: String!,$description: String!,$location: String!,$start_date: String!,$end_date: String!,$start_time: String!,$end_time: String!,$ticketInformation: String!,$image: String)
+  {
+    addEvent(title:$title,description:$description, location:$location,start_date:$start_date, end_date:$end_date,start_time:$start_time, end_time:$end_time,ticketInformation:$ticketInformation, image:$image )
+      {
+        _id
+        title 
+        description 
+        location 
+        start_date 
+        end_date 
+        start_time 
+        end_time 
+        ticketInformation 
+        createdBy
+        createdAt 
+        image 
+        attendees
+      }
+   }
+`;
 
 export const ADD_COMMENT = gql`
   mutation addComment($thoughtId: ID!, $commentText: String!) {

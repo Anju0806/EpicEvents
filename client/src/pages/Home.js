@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import EventList from '../components/EventList';
 import { QUERY_EVENTS } from '../utils/queries';
 
+
 const Home = () => {
   const { loading, data } = useQuery(QUERY_EVENTS);
   const events = data?.events || [];
@@ -18,6 +19,7 @@ const Home = () => {
           ) : (
              < EventList
               events={events}
+              
               title="Join the Event(s)..."
             />  
           )}
