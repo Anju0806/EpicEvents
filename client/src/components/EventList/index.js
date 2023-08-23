@@ -27,6 +27,7 @@ const EventList = ({
             display="flex" 
             alignItems="center" 
           >
+            {event.img}
             <Image
               src={event.image} 
               alt={event.title}

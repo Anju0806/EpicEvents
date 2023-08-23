@@ -124,19 +124,20 @@ const resolvers = {
       }
     },
 
-    addEvent: async (parent, args, context) => {
+    addEvent: async (parent, {eventInput}, context) => {
       try {
         if (!context.user) {
           throw new Error("You need to be logged in to add an event.");
         }
         // Add the username from the context to the args
         const newEvent = await Event.create({
-          ...args,
-          createdBy: context.user.username, // username is stored in context.user
+          ...eventInput,
+          createdBy: context.user._id, // username is stored in context.user
         });
 
         return newEvent;
       } catch (error) {
+        console.log(error)
         throw new Error("Failed to add event.");
       }
     },

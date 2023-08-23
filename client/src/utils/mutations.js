@@ -39,9 +39,9 @@ export const ADD_THOUGHT = gql`
   }
 `;
 export const ADD_EVENT = gql`
-mutation addEvent($title: String!,$description: String!,$location: String!,$start_date: String!,$end_date: String!,$start_time: String!,$end_time: String!,$ticketInformation: String!,$image: String)
+mutation addEvent($eventInput:EventInput)
   {
-    addEvent(title:$title,description:$description, location:$location,start_date:$start_date, end_date:$end_date,start_time:$start_time, end_time:$end_time,ticketInformation:$ticketInformation, image:$image )
+    addEvent(eventInput:$eventInput)
       {
         _id
         title 
@@ -52,10 +52,16 @@ mutation addEvent($title: String!,$description: String!,$location: String!,$star
         start_time 
         end_time 
         ticketInformation 
-        createdBy
+        createdBy{
+          username
+          _id
+        }
         createdAt 
         image 
-        attendees
+        attendees{
+          username
+          _id
+        }
       }
    }
 `;

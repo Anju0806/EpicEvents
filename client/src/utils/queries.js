@@ -27,7 +27,7 @@ export const QUERY_EVENTS = gql`
       start_time
       ticketInformation
       end_time
-      
+      image
     }
   }
 `;

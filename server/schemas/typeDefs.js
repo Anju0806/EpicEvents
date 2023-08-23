@@ -43,24 +43,24 @@ const typeDefs = gql`
     searchevents( search:String!, searchdate: String!, location: String!) : [Event]!
     me: User  #returns all joined events of a user
   }
-
+  input EventInput {
+    title: String,
+      description: String,
+      location: String,
+    start_date: String,
+      end_date: String,
+      start_time: String,
+      end_time: String,
+      ticketInformation: String,
+      image: String
+}
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     removeUser(userId: ID!): User
     updateUser(username: String!, email: String!, password: String): Auth
 
-    addEvent(
-      title: String!,
-      description: String!,
-      location: String!,
-      start_date: String!,
-      end_date: String!,
-      start_time: String!,
-      end_time: String!,
-      ticketInformation: String!,
-      image: String
-    ): Event
+    addEvent(eventInput: EventInput): Event
 
     joinEvent(
       eventId: ID!, 

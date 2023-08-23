@@ -28,22 +28,22 @@ const eventSchema = new mongoose.Schema({
   },
   end_date: {
     type: Date,
-    required: true,
+    required: false,
   },
   start_time: {
     type: String,
-    required: true,
+    required: false,
   },
   end_time: {
     type: String,
-    required: true,
+    required: false,
   },
   ticketInformation: {
     type: String,
-    required: true,
+    required: false,
   },
   max_stalls: {
-    type: Number, required: true
+    type: Number, required: false
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
