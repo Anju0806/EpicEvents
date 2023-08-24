@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_EVENT } from '../utils/mutations'; // Replace with your mutation import
 
 const AddEvent = (props) => {
-  const [formState, setFormState] = useState({ //usestate is for data to rerender in the page
+  const [formState, setFormState] = useState({ //usestate is for data to re-render in the page
     title: '',
     description: '',
     location: '',

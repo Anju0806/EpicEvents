@@ -63,8 +63,7 @@ const typeDefs = gql`
     addEvent(eventInput: EventInput): Event
 
     joinEvent(
-      eventId: ID!, 
-      userId: ID!
+      eventId: ID! 
       ): Event
 
     editEvent(

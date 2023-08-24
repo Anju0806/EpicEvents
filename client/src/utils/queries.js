@@ -28,6 +28,9 @@ export const QUERY_EVENTS = gql`
       ticketInformation
       end_time
       image
+      attendees{
+      _id 
+    }
     }
   }
 `;

@@ -65,6 +65,16 @@ mutation addEvent($eventInput:EventInput)
       }
    }
 `;
+export const JOIN_EVENT = gql`
+  mutation JoinEvent($eventId: ID!) {
+    joinEvent(eventId: $eventId) {
+      attendees {
+        username
+        _id
+      }
+    }
+  }
+`;
 
 export const ADD_COMMENT = gql`
   mutation addComment($thoughtId: ID!, $commentText: String!) {

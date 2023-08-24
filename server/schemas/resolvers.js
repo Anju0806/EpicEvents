@@ -17,16 +17,37 @@ const resolvers = {
     },
 
     //event queries
-    events: async (parent, args) => {
+events: async (parent, args) => {
+  const currentDate = new Date(); // Get the current date and time
+  const upcomingEvents = await Event.find({
+    end_date: { $gt: currentDate }, // Compare end date with today's date
+  })
+    .sort({ start_date: 1 }) // Sort(asc) events with start date 
+    .limit(6) // Limit the results to 6 upcoming events
+    .populate([{ path: 'attendees', strictPopulate: false }]); // Populate attendees
+
+  return upcomingEvents;
+},
+ 
+   /*  events: async (parent, args, context) => {
       const currentDate = new Date(); // Get the current date and time
+      const userId = context.user._id; // Get the user's ID from the context
+    
       const upcomingEvents = await Event.find({
-        end_date: { $gt: currentDate }, // Compare end date with today date
+        end_date: { $gt: currentDate }, // Compare end date with today's date
       })
         .sort({ start_date: 1 }) // Sort(asc) events with start date 
         .limit(6) // Limit the results to 6 upcoming events
-        .populate([{ path: 'events', strictPopulate: false }]);
+        .populate([{ path: 'attendees', strictPopulate: false }]); // Populate attendees
+    
+      // Loop through upcomingEvents and set userIsAttending property
+      upcomingEvents.forEach(event => {
+        event.userIsAttending = event.attendees.some(attendee => attendee._id.toString() === userId);
+      });
+    
       return upcomingEvents;
     },
+     */
     //get 1 event 
     event: async (parent, { eventId }) => {
       return Event.findOne({ _id: eventId }).populate([{ path: 'events', strictPopulate: false }]);
@@ -142,8 +163,9 @@ const resolvers = {
       }
     },
 
-    joinEvent: async (parent, args) => {
-      const { eventId, userId } = args;
+    joinEvent: async (parent, args, context) => {
+const { eventId } = args;
+      const  userId  = context.user._id;
     
       try {
         // Find the event by eventId
