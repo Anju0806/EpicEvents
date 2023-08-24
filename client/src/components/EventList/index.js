@@ -14,7 +14,20 @@ const EventList = ({
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const user_id = Auth.getProfile().data._id;
-  const [userAttendingEvents, setUserAttendingEvents] = useState([]);
+
+  // State to keep track of events the user has joined
+  const [joinedEvents, setJoinedEvents] = useState(false);
+
+useEffect(() => {
+    //  trigger whenever the state changes, updating the button's disabled state.
+    //console.log("useeffect: ",userAttendingEvents)
+    if(joinedEvents===true){
+      window.location.reload();//refresh event data
+    }
+  }, [joinedEvents]);
+  
+
+
 
   const handleJoinEvent = async (eventId) => {
     try {
@@ -22,10 +35,9 @@ const EventList = ({
         variables: { eventId },
       });
 
-      if (data && data.joinEvent.success) {
+      if (data) {
+        setJoinedEvents(true);
         console.log('Event joined successfully');
-        setUserAttendingEvents([...userAttendingEvents, eventId]);
-        console.log("setUserAttendingEvents ",userAttendingEvents)
       } else {
         console.log('Failed to join event');
       }
@@ -37,15 +49,7 @@ const EventList = ({
       }
     }
   };
-  useEffect(() => {
-    //  trigger whenever the state changes, updating the button's disabled state.
-    console.log("useeffect: ",userAttendingEvents)
-  }, [userAttendingEvents]);
-  
-
-  // State to keep track of events the user has joined
-  const [joinedEvents, setJoinedEvents] = useState([]);
-
+ 
   if (!events.length) {
     return <Heading as="h3">No Events Yet</Heading>;
   }
@@ -111,18 +115,9 @@ const EventList = ({
 
               <Button
                 as={Link}
-                to={`/joinEvent/${event._id}`}
                 colorScheme="blue"
                 
                 onClick={() => {
-
-                 /*  const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
-                  console.log("isUserAttending:", isUserAttending);
-
-                  console.log("Event ID:", event._id);
-                  console.log("event.attendees:", event.attendees);
-                  console.log(Auth.getProfile().data._id); */
-
                   if (!isUserAttending) {
                     handleJoinEvent(event._id);
                   }
