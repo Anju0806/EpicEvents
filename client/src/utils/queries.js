@@ -95,3 +95,23 @@ export const QUERY_ME = gql`
     }
   }
 `;
+export const QUERY_SEARCH_EVENTS = gql`
+  query getSearchEvents($search:String!, $searchdate: String!, $location: String!) {
+    searchevents(search:$search,searchdate:$searchdate,location:$location) {
+      _id
+      title
+      description
+      location
+      createdAt
+      start_date
+      end_date
+      start_time
+      ticketInformation
+      end_time
+      image
+      attendees{
+      _id 
+    }
+    }
+  }
+`;

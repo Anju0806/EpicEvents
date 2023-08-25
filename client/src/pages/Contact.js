@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries'; 
 import emailjs from '@emailjs/browser';
-import Auth from '../utils/auth';
+//import Auth from '../utils/auth';
 
 
 const Contact = () => {
@@ -26,8 +26,8 @@ const Contact = () => {
           console.log(error.text);
       });
     
-    console.log(formData);
-    console.log('User Email:', data.me.email); 
+    //console.log(formData);
+    //console.log('User Email:', data.me.email); 
   };
   if (loading) {
     return <div>Loading...</div>;
