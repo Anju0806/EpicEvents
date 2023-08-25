@@ -44,6 +44,26 @@ export const QUERY_THOUGHTS = gql`
     }
   }
 `;
+export const QUERY_SINGLE_EVENT = gql`
+  query getSingleEvent($eventId: ID!) {
+    event(eventId: $eventId){
+      _id
+      title
+      description
+      location
+      createdAt
+      start_date
+      end_date
+      start_time
+      ticketInformation
+      end_time
+      image
+      attendees{
+      _id 
+    }
+    }
+  }
+`;
 
 export const QUERY_SINGLE_THOUGHT = gql`
   query getSingleThought($thoughtId: ID!) {

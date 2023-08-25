@@ -33,7 +33,6 @@ const typeDefs = gql`
   }
 
   type Query {
-  
     users: [User]  #user queries
     userByUsername(username: String!): User
     userByEmail(email: String!): User

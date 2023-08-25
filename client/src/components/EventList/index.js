@@ -60,10 +60,10 @@ useEffect(() => {
       {events &&
         events.map((event) =>{
           const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
-          console.log("isUserAttending:", isUserAttending);
+          /* console.log("isUserAttending:", isUserAttending);
 
           console.log("Event ID:", event._id);
-          console.log("event.attendees:", event.attendees);
+          console.log("event.attendees:", event.attendees); */
           console.log(Auth.getProfile().data._id);
          return(
 
@@ -77,13 +77,21 @@ useEffect(() => {
             display="flex"
             alignItems="center"
           >
-            {event.img}
+            {/* {event.img}
             <Image
               src={event.image}
               alt={event.title}
               boxSize="100px"
               mr="4"
-            />
+            /> */}
+            <Link to={`/event/${event._id}`}>
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  boxSize="100px"
+                  mr="4"
+                />
+              </Link>
 
             <Box flex="1">
               <Heading as="h4" size="md" mb="2">
@@ -109,7 +117,7 @@ useEffect(() => {
               <Text fontSize="md" mb="2">
                 {event.description}
               </Text>
-              <Button as={Link} to={`/events/${event._id}`} colorScheme="blue" mr="2">
+              <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
                 View Details
               </Button>
 

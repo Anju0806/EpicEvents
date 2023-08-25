@@ -1,58 +1,42 @@
 import React from 'react';
-
-// Import the `useParams()` hook
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { QUERY_SINGLE_EVENT } from '../utils/queries';
 
-import CommentList from '../components/CommentList';
-import CommentForm from '../components/CommentForm';
-
-import { QUERY_SINGLE_THOUGHT } from '../utils/queries';
-
-const SingleThought = () => {
-  // Use `useParams()` to retrieve value of the route parameter `:profileId`
-  const { thoughtId } = useParams();
-
-  const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
-    // pass URL parameter
-    variables: { thoughtId: thoughtId },
+const SingleEvent = () => {
+  const { eventId } = useParams();
+  const { loading, data } = useQuery(QUERY_SINGLE_EVENT, {
+    variables: { eventId: eventId },
   });
-
-  const thought = data?.thought || {};
-
+  //console.log(data);
+  const event = data?.event || {};
+  console.log(event);
   if (loading) {
     return <div>Loading...</div>;
   }
   return (
     <div className="my-3">
-      <h3 className="card-header bg-dark text-light p-2 m-0">
-        {thought.thoughtAuthor} <br />
-        <span style={{ fontSize: '1rem' }}>
-          had this thought on {thought.createdAt}
-        </span>
-      </h3>
-      <div className="bg-light py-4">
-        <blockquote
-          className="p-4"
-          style={{
-            fontSize: '1.5rem',
-            fontStyle: 'italic',
-            border: '2px dotted #1a1a1a',
-            lineHeight: '1.5',
-          }}
-        >
-          {thought.thoughtText}
-        </blockquote>
-      </div>
-
-      <div className="my-5">
-        <CommentList comments={thought.comments} />
-      </div>
-      <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-        <CommentForm thoughtId={thought._id} />
+      <div className="card">
+        <img src={event.image} className="card-img-top" alt={event.title} />
+        <div className="card-body">
+          <h5 className="card-title">{event.title}</h5>
+          <p className="card-text">{event.description}</p>
+          <p className="card-text">
+            <strong>Location:</strong> {event.location}
+          </p>
+          <p className="card-text">
+            <strong>Date:</strong> {event.start_date} to {event.end_date}
+          </p>
+          <p className="card-text">
+            <strong>Time:</strong> {event.start_time} - {event.end_time}
+          </p>
+          <p className="card-text">
+            <strong>Ticket Information:</strong> {event.ticketInformation}
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default SingleThought;
+export default SingleEvent;

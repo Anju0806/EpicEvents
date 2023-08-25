@@ -17,45 +17,30 @@ const resolvers = {
     },
 
     //event queries
-events: async (parent, args) => {
-  const currentDate = new Date(); // Get the current date and time
-  const upcomingEvents = await Event.find({
-    end_date: { $gt: currentDate }, // Compare end date with today's date
-  })
-    .sort({ start_date: 1 }) // Sort(asc) events with start date 
-    .limit(6) // Limit the results to 6 upcoming events
-    .populate([{ path: 'attendees', strictPopulate: false }]); // Populate attendees
-
-  return upcomingEvents;
-},
- 
-   /*  events: async (parent, args, context) => {
+    events: async (parent, args) => {
       const currentDate = new Date(); // Get the current date and time
-      const userId = context.user._id; // Get the user's ID from the context
-    
       const upcomingEvents = await Event.find({
         end_date: { $gt: currentDate }, // Compare end date with today's date
       })
         .sort({ start_date: 1 }) // Sort(asc) events with start date 
         .limit(6) // Limit the results to 6 upcoming events
         .populate([{ path: 'attendees', strictPopulate: false }]); // Populate attendees
-    
-      // Loop through upcomingEvents and set userIsAttending property
-      upcomingEvents.forEach(event => {
-        event.userIsAttending = event.attendees.some(attendee => attendee._id.toString() === userId);
-      });
-    
+
       return upcomingEvents;
     },
-     */
+
     //get 1 event 
     event: async (parent, { eventId }) => {
-      return Event.findOne({ _id: eventId }).populate([{ path: 'events', strictPopulate: false }]);
+      return Event.findOne({ _id: eventId }).populate([
+        { path: 'attendees', strictPopulate: false }  
+      ]);
     },
+
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate([{ path: 'events', strictPopulate: false }]);
-      }},
+      }
+    },
     //search for events which matches any of the condition(title,description, date btw start_date and end_date,location)
     searchevents: async (parent, args) => {
       let { search, searchdate, location } = args;
@@ -110,7 +95,7 @@ events: async (parent, args) => {
       const token = signToken(user);
       return { token, user };
     },
-    
+
     removeUser: async (parent, { userId }) => {
       try {
         const removedUser = await User.findByIdAndRemove(userId);
@@ -145,7 +130,7 @@ events: async (parent, args) => {
       }
     },
 
-    addEvent: async (parent, {eventInput}, context) => {
+    addEvent: async (parent, { eventInput }, context) => {
       try {
         if (!context.user) {
           throw new Error("You need to be logged in to add an event.");
@@ -164,35 +149,35 @@ events: async (parent, args) => {
     },
 
     joinEvent: async (parent, args, context) => {
-const { eventId } = args;
-      const  userId  = context.user._id;
-    
+      const { eventId } = args;
+      const userId = context.user._id;
+
       try {
         // Find the event by eventId
         const event = await Event.findById(eventId);
-    
+
         if (!event) {
           throw new Error("Event not found");
         }
-    
+
         // Check if the user is already in the attendees list
         if (event.attendees.includes(userId)) {
           throw new Error("User is already attending this event");
         }
-    
+
         // Add the user's ID to the attendees list
         event.attendees.push(userId);
         await event.save();
-    
+
         // Update the user's events array
         const user = await User.findById(userId);
         user.events.push(eventId);
         await user.save();
-    
+
         // Populate and return the updated event
         const populatedEvent = await Event.findById(eventId)
           .populate([{ path: 'attendees', strictPopulate: false }]);
-          
+
         return populatedEvent;
       } catch (error) {
         throw new Error(error.message);
