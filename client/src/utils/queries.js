@@ -6,10 +6,8 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      thoughts {
+      events {
         _id
-        thoughtText
-        createdAt
       }
     }
   }
@@ -89,11 +87,10 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      thoughts {
+      isAdmin
+      events{
         _id
-        thoughtText
-        thoughtAuthor
-        createdAt
+        title
       }
     }
   }

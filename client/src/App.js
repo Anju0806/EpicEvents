@@ -18,6 +18,7 @@ import Footer from './components/Footer';
 import AddEvent from './pages/AddEvent'
 import EventList from './components/EventList';
 import SingleEvent from './pages/SingleEvent';
+import Contact from './pages/Contact';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -86,7 +87,10 @@ function App() {
                 element={<SingleEvent />}
               />
               <Route path="/joinEvent/:eventId" 
-              element={EventList} 
+              element={<EventList/>} 
+              />
+              <Route path="/contact" 
+              element={<Contact/>} 
               />
 
             </Routes>
