@@ -33,13 +33,13 @@ const Navbar = () => {
           <Text fontSize="lg" color="blue.200">
             |
           </Text>
-          <Box mr={4} ml={3}>
+          {/* <Box mr={4} ml={3}>
             <Link to="/search">
               <Text fontSize="lg" color="blue.200">
                 Search
               </Text>
             </Link>
-          </Box>
+          </Box> */}
         </Flex>
         {Auth.loggedIn() ? (
           <Flex flexDirection="row">
