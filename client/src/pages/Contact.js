@@ -12,6 +12,7 @@ const Contact = () => {
     message: '',
   });
   const { loading, data } = useQuery(QUERY_ME);
+  const [submissionStatus, setSubmissionStatus] = useState(''); // State for submission status
   // submit form
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,13 +22,13 @@ const Contact = () => {
     event.preventDefault();
     emailjs.sendForm('service_oulp9q6', 'template_mrih84w', event.target, 'IkTrdLieRYa2rNf96')
       .then((result) => {
-          console.log(result.text);
+          console.log(result.text);//OK
+          setSubmissionStatus('success'); // Set submission status to success
       }, (error) => {
           console.log(error.text);
+          setSubmissionStatus('error'); // Set submission status to error
       });
     
-    //console.log(formData);
-    //console.log('User Email:', data.me.email); 
   };
   if (loading) {
     return <div>Loading...</div>;
@@ -37,17 +38,6 @@ const Contact = () => {
     <div>
       <h2>Contact Us</h2>
       <form onSubmit={handleSubmit}>
-      {/* <div>
-          <label htmlFor="email">Email From:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={data.me.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div> */}
         <div>
           <label htmlFor="name">Name:</label>
           <input
@@ -72,6 +62,12 @@ const Contact = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      {submissionStatus === 'success' && (
+        <div className="success-message">Message sent successfully!</div>
+      )}
+      {submissionStatus === 'error' && (
+        <div className="error-message">Message not sent. Please try again later.</div>
+      )}
     </div>
   );
 };

@@ -20,15 +20,10 @@ const EventList = ({
 
 useEffect(() => {
     //  trigger whenever the state changes, updating the button's disabled state.
-    //console.log("useeffect: ",userAttendingEvents)
     if(joinedEvents===true){
       window.location.reload();//refresh event data
     }
   }, [joinedEvents]);
-  
-
-
-
   const handleJoinEvent = async (eventId) => {
     try {
       const { data } = await joinEvent({
@@ -60,11 +55,7 @@ useEffect(() => {
       {events &&
         events.map((event) =>{
           const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
-          /* console.log("isUserAttending:", isUserAttending);
-
-          console.log("Event ID:", event._id);
-          console.log("event.attendees:", event.attendees); */
-          console.log(Auth.getProfile().data._id);
+         // console.log(Auth.getProfile().data._id);
          return(
 
           <Box
@@ -77,13 +68,7 @@ useEffect(() => {
             display="flex"
             alignItems="center"
           >
-            {/* {event.img}
-            <Image
-              src={event.image}
-              alt={event.title}
-              boxSize="100px"
-              mr="4"
-            /> */}
+            
             <Link to={`/event/${event._id}`}>
                 <Image
                   src={event.image}
