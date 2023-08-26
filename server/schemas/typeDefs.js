@@ -39,7 +39,7 @@ const typeDefs = gql`
    
     events: [Event]! #6 upcoming events returned
     event(eventId:ID!):Event
-    searchevents( search:String!, searchdate: String!, location: String!) : [Event]!
+    searchevents( search:String, searchdate: String, location: String) : [Event]
     me: User  #returns all joined events of a user
   }
   input EventInput {
