@@ -7,8 +7,35 @@ export const QUERY_USER = gql`
       username
       email
       events {
-        _id
-      }
+      _id
+      
+    }
+    }
+  }
+`;
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      email
+      isAdmin
+      events {
+      _id
+      title
+      description
+      location
+      createdAt
+      start_date
+      end_date
+      start_time
+      ticketInformation
+      end_time
+      image
+      attendees{
+      _id 
+    }
+    }
     }
   }
 `;
@@ -81,20 +108,7 @@ export const QUERY_SINGLE_THOUGHT = gql`
 `;
 
 
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
-      username
-      email
-      isAdmin
-      events{
-        _id
-        title
-      }
-    }
-  }
-`;
+
 export const QUERY_SEARCH_EVENTS = gql`
   query getSearchEvents($search:String, $searchdate: String, $location: String) {
     searchevents(search:$search,searchdate:$searchdate,location:$location) {

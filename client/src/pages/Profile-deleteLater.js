@@ -1,8 +1,9 @@
 import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import EventList from '../components/EventList';
-import { Link } from 'react-router-dom';
+
+import ThoughtForm from '../components/ThoughtForm';
+import ThoughtList from '../components/ThoughtList';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
@@ -40,35 +41,22 @@ const Profile = () => {
         <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </h2>
-        <div className="col-12 col-md-10 mb-5">
-          <h3>Profile Details:</h3>
-          <p>Username: {user.username}</p>
-          <p>Email: {user.email}</p>
-        </div>
-        {/* Display User's Events */}
-        <div className="col-12 col-md-10 mb-5">
-          
-          {user.events.length === 0 ? (
-            <p>No events created by {user.username}.</p>
-          ) : (
-            <EventList events={user.events} title={`${user.username}'s events...`} />
-          )}
-        </div>
 
-       {/*  <div className="col-12 col-md-10 mb-5">
-          <EventList
-            events={user.events}
+        <div className="col-12 col-md-10 mb-5">
+          <ThoughtList
+            thoughts={user.thoughts}
             title={`${user.username}'s thoughts...`}
             showTitle={false}
             showUsername={false}
           />
-          
-        </div> */}
-       {/* Display Event Form */}
-       {!userParam && (
-            
-            <Link to="/addevent">Create a new Event</Link>
-          
+        </div>
+        {!userParam && (
+          <div
+            className="col-12 col-md-10 mb-3 p-3"
+            style={{ border: '1px dotted #1a1a1a' }}
+          >
+            <ThoughtForm />
+          </div>
         )}
       </div>
     </div>

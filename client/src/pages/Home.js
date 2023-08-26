@@ -7,7 +7,7 @@ import { QUERY_EVENTS, QUERY_SEARCH_EVENTS } from '../utils/queries';
 
 const Home = () => {
   const client = useApolloClient();
-  const { loading: eventsLoading, data: eventsData } = useQuery(QUERY_EVENTS);
+  const {  data: eventsData } = useQuery(QUERY_EVENTS);
   const events = eventsData?.events || [];
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [isSearching, setIsSearching] = useState(false); // Add state for indicating search mode
