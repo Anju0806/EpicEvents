@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_EVENT } from '../utils/mutations'; // Replace with your mutation import
+import FileBase64 from 'react-file-base64';
 
 const AddEvent = (props) => {
   const [formState, setFormState] = useState({ //usestate is for data to re-render in the page
@@ -102,7 +103,7 @@ const AddEvent = (props) => {
                   value={formState.ticketInformation}
                   onChange={handleChange}
                 />
-                <input
+                {/* <input
                   type="file"
                   accept="image/*"
                   onChange={(event) => {
@@ -112,7 +113,30 @@ const AddEvent = (props) => {
                       image: selectedImage,
                     });
                   }}
+                /> */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => {
+                    const selectedImage = event.target.files[0];
+
+                    if (selectedImage) {
+                      const reader = new FileReader();
+
+                      reader.onload = (e) => {
+                        const base64Image = e.target.result;
+                        setFormState({
+                          ...formState,
+                          image: base64Image,
+                        });
+                      };
+
+                      reader.readAsDataURL(selectedImage);
+                    }
+                  }}
                 />
+
+
                 <button
                   className="btn btn-block btn-primary"
                   style={{ cursor: 'pointer' }}

@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
-    "faker": "^6.6.6"
+    "faker": "^6.6.6",
+    "react-file-base64": "^1.0.3"
   }
 }
