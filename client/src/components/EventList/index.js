@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { Box, Heading, Text, Link as ChakraLink, Button, Image } from '@chakra-ui/react';
 import { JOIN_EVENT } from '../../utils/mutations'; // Replace with your mutation import
 import Auth from '../../utils/auth';
@@ -10,22 +10,35 @@ const EventList = ({
   title,
   showTitle = true,
   showCreatedBy = true,
+  triggerRefresh,
+  updateable
 
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
-  const user_id = Auth.getProfile().data._id;
-
+  const navigate= useNavigate();
+  
+  let user_id=null;
+  if(Auth.loggedIn())
+  {
+    const profile= Auth.getProfile();
+    user_id = profile.data._id;
+  }
+ 
   // State to keep track of events the user has joined
   const [joinedEvents, setJoinedEvents] = useState(false);
 
 useEffect(() => {
     //  trigger whenever the state changes, updating the button's disabled state.
     if(joinedEvents===true){
-      window.location.reload();//refresh event data
+      //window.location.reload();//refresh event data
     }
   }, [joinedEvents]);
   const handleJoinEvent = async (eventId) => {
+
     try {
+      if(!Auth.loggedIn()){
+        return navigate("/login",{replace: true});
+      }
       const { data } = await joinEvent({
         variables: { eventId },
       });
@@ -33,6 +46,7 @@ useEffect(() => {
       if (data) {
         setJoinedEvents(true);
         console.log('Event joined successfully');
+        triggerRefresh();
       } else {
         console.log('Failed to join event');
       }
@@ -106,8 +120,10 @@ useEffect(() => {
                 View Details
               </Button>
 
+             {!updateable&&
+
               <Button
-                as={Link}
+                
                 colorScheme="blue"
                 
                 onClick={() => {
@@ -118,8 +134,16 @@ useEffect(() => {
                 disabled={isUserAttending}
               >
                 {isUserAttending ? "Joined" : "Join Event"}
-              </Button>
-
+              </Button>}
+                {updateable && <Button
+                
+                colorScheme="blue"
+                
+                onClick={() => {
+                 //updateEvent();
+                }}
+                
+              >Update Event</Button>}
 
             </Box>
           </Box>

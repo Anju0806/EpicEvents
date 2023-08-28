@@ -25,14 +25,17 @@ const eventSchema = new mongoose.Schema({
   start_date: {
     type: Date,
     required: true,
+    get: (timestamp) => dateFormat(timestamp),
   },
   end_date: {
     type: Date,
     required: false,
+    get: (timestamp) => dateFormat(timestamp),
   },
   start_time: {
     type: String,
     required: false,
+    
   },
   end_time: {
     type: String,

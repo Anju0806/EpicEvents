@@ -73,7 +73,7 @@ const AddEvent = (props) => {
                   className="form-input"
                   placeholder="Event Start Date"
                   name="start_date"
-                  type="date"
+                  type="datetime-local"
                   value={formState.start_date}
                   onChange={handleChange}
                   min={new Date().toISOString().split('T')[0]}

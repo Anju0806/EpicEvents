@@ -51,7 +51,7 @@ const Profile = () => {
           {user.events.length === 0 ? (
             <p>No events created by {user.username}.</p>
           ) : (
-            <EventList events={user.events} title={`${user.username}'s events...`} />
+            <EventList events={user.events} updateable={true} title={`${user.username}'s events...`} />
           )}
         </div>
 

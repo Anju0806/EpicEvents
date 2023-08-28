@@ -1,16 +1,30 @@
 
-import React, { useState } from 'react';
-import { useQuery, useApolloClient } from '@apollo/client';
+import React, { useState,useEffect } from 'react';
+import { useLazyQuery, useApolloClient } from '@apollo/client';
 import EventList from '../components/EventList';
 import SearchForm from '../components/SearchForm';
 import { QUERY_EVENTS, QUERY_SEARCH_EVENTS } from '../utils/queries';
 
 const Home = () => {
   const client = useApolloClient();
-  const {  data: eventsData } = useQuery(QUERY_EVENTS);
-  const events = eventsData?.events || [];
+  const   [getEvents, {loading,error,data}] = useLazyQuery(QUERY_EVENTS,{
+    fetchPolicy: 'network-only', // Doesn't check cache before making a network request
+  });
+  //const events = eventsData?.events || [];
+  const [events,setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [isSearching, setIsSearching] = useState(false); // Add state for indicating search mode
+
+  useEffect(() => {
+  getEvents();
+  }, [])
+  useEffect(() => {
+    console.log(data);
+    if(data){
+
+      setEvents(data.events);
+    }
+    }, [data])
 
   const handleSearch = async (search, searchdate, location) => {
     if (!search && !searchdate && !location) {
@@ -39,11 +53,15 @@ const Home = () => {
     setFilteredEvents([]); // Clear filtered events
     setIsSearching(false); // Set search mode to false
   };
+  const refreshHandler = () => {
+    getEvents(); // Clear filtered events
+    console.log("triggered")
+  };
 
   return (
     <main>
       <div className="flex-row justify-center">
-        <div className="col-12 col-md-8 mb-3">
+         <div className="col-12 col-md-8 mb-3">
           <SearchForm onSearch={handleSearch} />
           {isSearching ? ( // Display either search results or original events list
             <div>
@@ -51,9 +69,10 @@ const Home = () => {
               <EventList events={filteredEvents.length > 0 ? filteredEvents : events} title="Join the Event..." />
             </div>
           ) : (
-            <EventList events={events} title="Join the Events..." />
+            
+            <EventList events={events} triggerRefresh={refreshHandler} title="Join the Events..." />
           )}
-        </div>
+        </div> 
       </div>
     </main>
   );
