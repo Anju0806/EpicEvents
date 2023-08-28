@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link,useNavigate } from 'react-router-dom';
 import { Box, Heading, Text, Link as ChakraLink, Button, Image } from '@chakra-ui/react';
-import { JOIN_EVENT } from '../../utils/mutations'; // Replace with your mutation import
+import { JOIN_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const EventList = ({
@@ -29,9 +29,6 @@ const EventList = ({
 
 useEffect(() => {
     //  trigger whenever the state changes, updating the button's disabled state.
-    if(joinedEvents===true){
-      //window.location.reload();//refresh event data
-    }
   }, [joinedEvents]);
   const handleJoinEvent = async (eventId) => {
 
@@ -136,13 +133,10 @@ useEffect(() => {
                 {isUserAttending ? "Joined" : "Join Event"}
               </Button>}
                 {updateable && <Button
-                
                 colorScheme="blue"
-                
                 onClick={() => {
                  //updateEvent();
-                }}
-                
+                }} 
               >Update Event</Button>}
 
             </Box>
