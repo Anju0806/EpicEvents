@@ -60,22 +60,8 @@ const typeDefs = gql`
     updateUser(username: String!, email: String!, password: String): Auth
 
     addEvent(eventInput: EventInput): Event
-
-    joinEvent(
-      eventId: ID! 
-      ): Event
-
-    editEvent(
-      title: String,
-      description: String,
-      location: String,
-      start_date: String,
-      end_date: String,
-      start_time: String,
-      end_time: String,
-      ticketInformation: String,
-      
-    ): Event
+    joinEvent(eventId: ID! ): Event
+    updateEvent(eventId: ID!, eventInput: EventInput ): Event
     deleteEvent(eventId: ID!): Event
   }
 `;

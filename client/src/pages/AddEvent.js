@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_EVENT } from '../utils/mutations'; // Replace with your mutation import
+import { ADD_EVENT } from '../utils/mutations'; 
 import FileBase64 from 'react-file-base64';
 
 const AddEvent = (props) => {

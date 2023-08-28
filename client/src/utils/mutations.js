@@ -24,20 +24,7 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-      }
-    }
-  }
-`;
+
 export const ADD_EVENT = gql`
 mutation addEvent($eventInput:EventInput)
   {
@@ -76,18 +63,31 @@ export const JOIN_EVENT = gql`
   }
 `;
 
-export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
+
+export const UPDATE_EVENT = gql`
+  mutation updateEvent($eventId: ID!, $eventInput: EventInput!) {
+    updateEvent(eventId: $eventId, eventInput: $eventInput) {
       _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
+      title
+      description
+      location
+      start_date
+      end_date
+      start_time
+      end_time
+      ticketInformation
+      createdBy {
+        username
         _id
-        commentText
-        createdAt
+      }
+      createdAt
+      image
+      attendees {
+        username
+        _id
       }
     }
   }
 `;
+
+

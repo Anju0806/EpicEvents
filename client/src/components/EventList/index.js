@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Heading, Text, Link as ChakraLink, Button, Image } from '@chakra-ui/react';
 import { JOIN_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
@@ -15,26 +15,25 @@ const EventList = ({
 
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
-  const navigate= useNavigate();
-  
-  let user_id=null;
-  if(Auth.loggedIn())
-  {
-    const profile= Auth.getProfile();
+  const navigate = useNavigate();
+
+  let user_id = null;
+  if (Auth.loggedIn()) {
+    const profile = Auth.getProfile();
     user_id = profile.data._id;
   }
- 
+
   // State to keep track of events the user has joined
   const [joinedEvents, setJoinedEvents] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     //  trigger whenever the state changes, updating the button's disabled state.
   }, [joinedEvents]);
-  const handleJoinEvent = async (eventId) => {
 
+  const handleJoinEvent = async (eventId) => {
     try {
-      if(!Auth.loggedIn()){
-        return navigate("/login",{replace: true});
+      if (!Auth.loggedIn()) {
+        return navigate("/login", { replace: true });
       }
       const { data } = await joinEvent({
         variables: { eventId },
@@ -55,7 +54,7 @@ useEffect(() => {
       }
     }
   };
- 
+
   if (!events.length) {
     return <Heading as="h3">No Events Yet</Heading>;
   }
@@ -64,23 +63,22 @@ useEffect(() => {
     <Box>
       {showTitle && <Heading as="h3">{title}</Heading>}
       {events &&
-        events.map((event) =>{
+        events.map((event) => {
           const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
-         // console.log(Auth.getProfile().data._id);
-         return(
+          // console.log(Auth.getProfile().data._id);
+          return (
 
-          <Box
-            key={event._id}
-            borderWidth="1px"
-            borderColor="gray.300"
-            borderRadius="md"
-            p="4"
-            mb="4"
-            display="flex"
-            alignItems="center"
-          >
-            
-            <Link to={`/event/${event._id}`}>
+            <Box
+              key={event._id}
+              borderWidth="1px"
+              borderColor="gray.300"
+              borderRadius="md"
+              p="4"
+              mb="4"
+              display="flex"
+              alignItems="center"
+            >
+              <Link to={`/event/${event._id}`}>
                 <Image
                   src={event.image}
                   alt={event.title}
@@ -89,59 +87,56 @@ useEffect(() => {
                 />
               </Link>
 
-            <Box flex="1">
-              <Heading as="h4" size="md" mb="2">
-                {showCreatedBy ? (
-                  <ChakraLink
-                    as={Link}
-                    to={`/profiles/${event.createdBy}`}
-                    color="blue.500"
+              <Box flex="1">
+                <Heading as="h4" size="md" mb="2">
+                  {showCreatedBy ? (
+                    <ChakraLink
+                      as={Link}
+                      to={`/profiles/${event.createdBy}`}
+                      color="blue.500"
+                    >
+                      {event.title}
+                    </ChakraLink>
+                  ) : (
+                    <>
+                      <Text fontSize="sm">
+                        You created this event on {event.createdAt}
+                      </Text>
+                    </>
+                  )}
+                </Heading>
+                <Text mb="2">
+                  {event.start_date} to {event.end_date}
+                </Text>
+                <Text fontSize="md" mb="2">
+                  {event.description}
+                </Text>
+                <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
+                  View Details
+                </Button>
+
+                {!updateable &&
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => {
+                      if (!isUserAttending) {
+                        handleJoinEvent(event._id);
+                      }
+                    }}
+                    disabled={isUserAttending}
                   >
-                    {event.title}
-                  </ChakraLink>
-                ) : (
-                  <>
-                    <Text fontSize="sm">
-                      You created this event on {event.createdAt}
-                    </Text>
-                  </>
-                )}
-              </Heading>
-              <Text mb="2">
-                {event.start_date} to {event.end_date}
-              </Text>
-              <Text fontSize="md" mb="2">
-                {event.description}
-              </Text>
-              <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
-                View Details
-              </Button>
-
-             {!updateable&&
-
-              <Button
-                
-                colorScheme="blue"
-                
-                onClick={() => {
-                  if (!isUserAttending) {
-                    handleJoinEvent(event._id);
+                    {isUserAttending ? "Joined" : "Join Event"}
+                  </Button>
                   }
-                }}
-                disabled={isUserAttending}
-              >
-                {isUserAttending ? "Joined" : "Join Event"}
-              </Button>}
-                {updateable && <Button
-                colorScheme="blue"
-                onClick={() => {
-                 //updateEvent();
-                }} 
-              >Update Event</Button>}
+               {/* update event button */}
+                {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
+                  Update Event
+                </Button>}
 
+              </Box>
             </Box>
-          </Box>
-        )}
+          )
+        }
         )}
     </Box>
   );
