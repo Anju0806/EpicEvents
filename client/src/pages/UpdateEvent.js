@@ -110,7 +110,7 @@ const UpdateEvent = () => {
                 className="form-input"
                 placeholder="Event Start Date"
                 name="start_date"
-                type="datetime-local"
+                type="date"
                 //value={updatedEvent.start_date}
                 defaultValue={event.start_date}
                 onChange={handleInputChange}
