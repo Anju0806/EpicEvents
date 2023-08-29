@@ -52,6 +52,15 @@ mutation addEvent($eventInput:EventInput)
       }
    }
 `;
+export const DELETE_EVENT = gql`
+mutation deleteEvent($eventId: ID!) {
+    deleteEvent(eventId: $eventId)
+     {
+        _id
+      
+    }
+  }
+`;
 export const JOIN_EVENT = gql`
   mutation JoinEvent($eventId: ID!) {
     joinEvent(eventId: $eventId) {
@@ -59,6 +68,7 @@ export const JOIN_EVENT = gql`
         username
         _id
       }
+      
     }
   }
 `;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Heading, Text, Link as ChakraLink, Button, Image } from '@chakra-ui/react';
-import { JOIN_EVENT } from '../../utils/mutations';
+import { JOIN_EVENT, DELETE_EVENT} from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const EventList = ({
@@ -15,6 +15,7 @@ const EventList = ({
 
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
+  const [deleteEvent] = useMutation(DELETE_EVENT); 
   const navigate = useNavigate();
 
   let user_id = null;
@@ -29,7 +30,22 @@ const EventList = ({
   useEffect(() => {
     //  trigger whenever the state changes, updating the button's disabled state.
   }, [joinedEvents]);
+  const handleDeleteEvent = async (eventId) => {
+    try {
+      const { data } = await deleteEvent({
+        variables: { eventId },
+      });
 
+      if (data) {
+        console.log('Event deleted successfully');
+        triggerRefresh();
+      } else {
+        console.log('Failed to delete event');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleJoinEvent = async (eventId) => {
     try {
       if (!Auth.loggedIn()) {
@@ -131,6 +147,17 @@ const EventList = ({
                {/* update event button */}
                 {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
                   Update Event
+                </Button>}
+                {/* {updateable && <Button as={Link} to={`/deleteevent/${event._id}`} colorScheme="blue" mr="2">
+                  Delete Event
+                </Button>} */}
+                {updateable && <Button
+                  colorScheme="red" // You can use red color for delete
+                  onClick={() => {
+                    handleDeleteEvent(event._id);
+                  }}
+                >
+                  Delete Event
                 </Button>}
 
               </Box>

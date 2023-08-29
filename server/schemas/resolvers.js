@@ -207,15 +207,27 @@ const resolvers = {
       }
     },
     
-    deleteEvent: async (parent, { eventId }) => {
+    deleteEvent: async (_, { eventId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to delete an event');
+      }
+
       try {
-        const deletedEvent = await Event.findByIdAndRemove(eventId);
-        if (!deletedEvent) {
-          throw new Error("Event not found.");
+        const event = await Event.findById(eventId);
+
+        if (!event) {
+          throw new UserInputError('Event not found');
         }
-        return deletedEvent;
+
+        if (event.createdBy.toString() !== context.user._id.toString()) {
+          throw new ForbiddenError('You are not authorized to delete this event');
+        }
+
+        await Event.findByIdAndDelete(eventId);
+
+        return event;
       } catch (error) {
-        throw new Error("Failed to delete event.");
+        throw new ApolloError('Error deleting event', 'DELETE_EVENT_ERROR', error);
       }
     },
 
