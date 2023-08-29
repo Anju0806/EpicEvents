@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_EVENT } from '../utils/queries'; // Replace with your actual update mutation
@@ -13,7 +14,7 @@ const UpdateEvent = () => {
     },
   });
 
-  const [updateEvent] = useMutation(UPDATE_EVENT);
+  const [updateEvent, { error,updatedata }] = useMutation(UPDATE_EVENT);
 
    const [updatedEvent, setUpdatedEvent] = useState({
     title: '',
@@ -67,6 +68,12 @@ const UpdateEvent = () => {
 
   return (
     <div className="my-3">
+      {updatedata ? (
+              <p>
+                Success! The event has been updated.{' '}
+                <Link to="/">Back to the homepage.</Link>
+              </p>
+            ) : (
       <form onSubmit={handleSubmit}>
         <div className="card">
           <div className="card-body">
@@ -138,6 +145,7 @@ const UpdateEvent = () => {
                 placeholder="Ticket Information"
                 name="ticketInformation"
                 type="text"
+               /*  value={event.ticketInformation} */
                 value={updatedEvent.ticketInformation}
                 onChange={handleInputChange}
               />
@@ -169,6 +177,11 @@ const UpdateEvent = () => {
           </div>
         </div>
       </form>
+            )} {error && (
+              <div className="my-3 p-3 bg-danger text-white">
+                {error.message}
+              </div>
+            )}
     </div>
   );
   
