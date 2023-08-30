@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Heading, Text, Link as ChakraLink, Button, Image } from '@chakra-ui/react';
-import { JOIN_EVENT, DELETE_EVENT} from '../../utils/mutations';
+import { JOIN_EVENT, DELETE_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import { SimpleGrid } from '@chakra-ui/react'
 
 const EventList = ({
   events,
@@ -15,7 +16,7 @@ const EventList = ({
 
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
-  const [deleteEvent] = useMutation(DELETE_EVENT); 
+  const [deleteEvent] = useMutation(DELETE_EVENT);
   const navigate = useNavigate();
 
   let user_id = null;
@@ -75,9 +76,13 @@ const EventList = ({
     return <Heading as="h3">No Events Yet</Heading>;
   }
 
+
+
   return (
     <Box>
       {showTitle && <Heading as="h3">{title}</Heading>}
+      
+      <SimpleGrid columns={[1, null, 2]}  spacingX='40px'spacingY='25px' >
       {events &&
         events.map((event) => {
           const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
@@ -85,15 +90,16 @@ const EventList = ({
           return (
 
             <Box
-              key={event._id}
-              borderWidth="1px"
-              borderColor="gray.300"
-              borderRadius="md"
-              p="4"
-              mb="4"
-              display="flex"
-              alignItems="center"
+            key={event._id}
+            borderWidth="1px"
+            borderColor="gray.300"
+            borderRadius="md"
+            p="4"
+            mb="4"
+            display="flex"
+            alignItems="center"
             >
+              
               <Link to={`/event/${event._id}`}>
                 <Image
                   src={event.image}
@@ -105,21 +111,7 @@ const EventList = ({
 
               <Box flex="1">
                 <Heading as="h4" size="md" mb="2">
-                  {showCreatedBy ? (
-                    <ChakraLink
-                      as={Link}
-                      to={`/profiles/${event.createdBy}`}
-                      color="blue.500"
-                    >
-                      {event.title}
-                    </ChakraLink>
-                  ) : (
-                    <>
-                      <Text fontSize="sm">
-                        You created this event on {event.createdAt}
-                      </Text>
-                    </>
-                  )}
+                {event.title}
                 </Heading>
                 <Text mb="2">
                   {event.start_date} to {event.end_date}
@@ -161,12 +153,19 @@ const EventList = ({
                 </Button>}
 
               </Box>
+              
             </Box>
           )
         }
         )}
+        </SimpleGrid>
     </Box>
   );
 };
 
 export default EventList;
+
+
+
+
+
