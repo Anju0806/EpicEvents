@@ -61,7 +61,7 @@ const Home = () => {
   return (
     <main>
       <div className="flex-row justify-center">
-         <div className="col-12 col-md-8 mb-3">
+         <div className="col-12 col-md-12 mb-3">
           <SearchForm onSearch={handleSearch} />
           {isSearching ? ( // Display either search results or original events list
             <div>

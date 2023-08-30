@@ -1,101 +1,90 @@
- 
-import React from 'react';
+import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Flex, Box, Text, Button } from '@chakra-ui/react';
+//import { Flex, Box, Text, Button, Spacer, Heading } from '@chakra-ui/react';
+//import { Flex, Box, Text, Button, Spacer, Heading, IconButton } from '@chakra-ui/react'; // Import the Icon component
+import { Flex, Box, Text, Button, Spacer, Heading } from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 
 import Auth from '../../utils/auth';
 
 const Navbar = () => {
   const logout = (event) => {
     event.preventDefault();
-    Auth.logout();
+    Auth.logout();                            
   };
+/*   const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  }; */
+
 
   return (
-
-    <Flex bg="blue.500" color="white" p={4} alignItems="center" padding={50} >
+    <Flex bg="#194C47" p={5} color="white" minWidth='max-content' alignItems='center' gap='2' >
       <Box p='2'>
         <Link to="/">
-          <Text fontSize="xl" fontWeight="bold" m={0}>
-            Epic Events
-          </Text>
+          <Heading size='md' >Epic Events</Heading>
         </Link>
       </Box>
-      <Flex ml="auto" flexDirection="column">
-        <Flex flexDirection="row">
-          <Box mr={3}>
-            <Link to="/contact">
-              <Text fontSize="lg" color="blue.200">
-                Contact
-              </Text>
-            </Link>
-          </Box>
-          <Text fontSize="lg" color="blue.200">
-            |
-          </Text>
-          {/* <Box mr={4} ml={3}>
-            <Link to="/search">
-              <Text fontSize="lg" color="blue.200">
-                Search
-              </Text>
-            </Link>
-          </Box> */}
-        </Flex>
+      <Spacer />
+      <Box>
+{/* <div><HamburgerIcon /></div> */}
+      
+
+       {/*  <Button
+          display={['block', 'block', 'none']}
+          onClick={toggleMenu} >
+          {showMenu ? <CloseIcon /> : <HamburgerIcon />} 
+        </Button>
+ */}
+
+      </Box>
+      <Flex
+        direction={['column', 'row']} // Column on small screens, row on larger screens
+        display={['none', 'flex', 'flex']} // Hide on small screens, show on larger screens
+        alignItems={['center', 'center', 'flex-end']} // Adjust alignment
+      >
+        <Text >
+          <Link  to="/contact">
+            Contact
+          </Link>
+        </Text>
         {Auth.loggedIn() ? (
-          <Flex flexDirection="row">
-            <Box mr={4}>
-            <Link to="/me" mx={2}>
-              <Text fontSize="lg" color="blue.200">
+          <Flex >
+            <Text >
+              <Link  m='2' to="/me">
                 {Auth.getProfile().data.username}'s profile
-              </Text>
-            </Link>
-            </Box>
-            <Box mr={4}>
-              <Link to="/addEvent" mx={2}>
-              <Text fontSize="lg" color="blue.200">
+              </Link>
+            </Text>
+            <Text>
+              <Link color='teal.500' to="/addEvent">
                 Create Event
-              </Text>
-            </Link>
-            </Box>
-            <Link to="/" mx={2} onClick={logout}>
-              <Text
-                as="button"
-                fontSize="lg"
-                color="blue.200"
-                _hover={{ textDecoration: 'underline' }}
-              >
+              </Link>
+            </Text>
+            <Text >
+              <Link color='teal.500' to="/" onClick={logout}>
                 Logout
-              </Text>
-            </Link>
-            </Flex>
-        ) : 
-        
-        (
-          <Flex flexDirection="row">
-            <Box mr={3} ml={5}>
-              <Link to="/login" mx={2}>
-                <Text fontSize="lg" color="blue.200">
-                  Login
-                </Text>
               </Link>
-            </Box>
-            <Text fontSize="lg" color="blue.200">
-            |
-          </Text>
-            <Box mr={4} ml={3}>
-              <Link to="/signup" mx={2}>
-                <Text fontSize="lg" color="blue.200">
-                  Signup
-                </Text>
+            </Text>
+
+          </Flex>
+        ) : (
+          <Flex>
+            <Text>
+              <Link color='teal.500' to="/login">
+                Login
               </Link>
-            </Box>
-            </Flex>
+            </Text>
+            <Text>
+              <Link color='teal.500' to="/signup">
+                Signup
+              </Link>
+            </Text>
+          </Flex>
         )}
       </Flex>
     </Flex>
-    
   );
 };
 
 export default Navbar;
- 

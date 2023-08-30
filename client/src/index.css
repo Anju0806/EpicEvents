@@ -144,6 +144,20 @@ img {
 
 /* Forms
    ========================================================================== */
+
+
+   /* Adding chakraButton styling */
+   Button{
+    background-color:#2a726a  !important;
+    color: white !important;
+   }
+   Button:hover {
+    color: #E38335 !important;
+    text-decoration: none;
+  }
+  
+
+
 /**
  * 1. Change the font styles in all browsers.
  * 2. Remove the margin in Firefox and Safari.
@@ -423,14 +437,16 @@ button {
 }
 
 a {
-  color: #1b89bc;
+  padding: 0.5em;
+  color: #f7f8f8;
   text-decoration: none;
 }
 
 a:hover {
-  color: #065b83;
-  text-decoration: underline;
+  color: #E38335;
+  text-decoration: none;
 }
+
 
 /* HEIGHT / WIDTH UTILS */
 .w-100 {
@@ -1168,8 +1184,8 @@ label form [type='radio'] {
 }
 
 .container {
-  width: 85%;
-  max-width: 1200px;
+  width: 95%;
+  max-width: 1500px;
   margin-left: auto;
   margin-right: auto;
 }

@@ -1,4 +1,13 @@
 import React, { useState } from 'react';
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+   Input ,
+   Flex,
+   Button, ButtonGroup
+} from '@chakra-ui/react'
 //import { useQuery } from '@apollo/client';
 
 const SearchForm = ({ onSearch }) => {
@@ -13,34 +22,39 @@ const SearchForm = ({ onSearch }) => {
 
   return (
     <form onSubmit={handleSearch}>
-      <div>
-        <label htmlFor="search">Event Title:</label>
-        <input
-          type="text"
+
+      <FormControl as='fieldset'>
+      <FormLabel htmlFor='email'>Search for event</FormLabel>
+      <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+       <label htmlFor="search">Keyword:</label> 
+        <Input  
           id="search"
           value={search}
           onChange={(e) => setsearch(e.target.value)}
         />
-      </div>
-      <div>
-        <label htmlFor="searchdate">Event Date:</label>
-        <input
+        
+     
+      
+        <label htmlFor="searchdate">Date:</label>
+        <Input 
           type="date"
           id="searchdate"
           value={searchdate}
           onChange={(e) => setsearchdate(e.target.value)}
         />
-      </div>
-      <div>
+      
+     
         <label htmlFor="location">Location:</label>
-        <input
+        <Input
           type="text"
           id="location"
           value={location}
           onChange={(e) => setlocation(e.target.value)}
         />
-      </div>
-      <button type="submit">Search</button>
+     
+      <Button type="submit" minWidth="100px">Search</Button>
+      </Flex>
+      </FormControl>
     </form>
   );
 };
