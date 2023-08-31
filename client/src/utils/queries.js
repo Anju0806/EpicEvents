@@ -53,6 +53,7 @@ export const QUERY_EVENTS = gql`
       ticketInformation
       end_time
       image
+      attendeesCount
       attendees{
       _id 
     }
@@ -74,6 +75,7 @@ export const QUERY_SINGLE_EVENT = gql`
       ticketInformation
       end_time
       image
+      attendeesCount
       attendees{
       _id 
     }
@@ -98,6 +100,7 @@ export const QUERY_SEARCH_EVENTS = gql`
       ticketInformation
       end_time
       image
+      attendeesCount
       attendees{
       _id 
     }

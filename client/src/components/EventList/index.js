@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Heading, Text, Link as ChakraLink, Button, Image } from '@chakra-ui/react';
+import { Heading, Text, Link as ChakraLink, Button, Image, Box } from '@chakra-ui/react';
 import { JOIN_EVENT, DELETE_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import { SimpleGrid } from '@chakra-ui/react'
+
 
 const EventList = ({
   events,
@@ -81,84 +82,92 @@ const EventList = ({
   return (
     <Box>
       {showTitle && <Heading as="h3">{title}</Heading>}
-      
-      <SimpleGrid columns={[1, null, 2]}  spacingX='40px'spacingY='25px' >
-      {events &&
-        events.map((event) => {
-          const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
-          // console.log(Auth.getProfile().data._id);
-          return (
 
-            <Box
-            key={event._id}
-            borderWidth="1px"
-            borderColor="gray.300"
-            borderRadius="md"
-            p="4"
-            mb="4"
-            display="flex"
-            alignItems="center"
-            >
-              
-              <Link to={`/event/${event._id}`}>
-                <Image
-                  src={event.image}
-                  alt={event.title}
-                  boxSize="100px"
-                  mr="4"
-                />
-              </Link>
+      <SimpleGrid columns={[2, null, 3]} spacingX='40px' spacingY='25px' >
+        {events &&
+          events.map((event) => {
+            const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
+            // console.log(Auth.getProfile().data._id);
+            return (
+              <Box
+  key={event._id}
+  maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'
+  display='flex'
+  flexDirection='column'
+  alignItems='start'
+>
+  <Box
+    color='gray.500'
+    fontWeight='semibold'
+    letterSpacing='wide'
+    fontSize='xs'
+    textTransform='uppercase'
+    alignSelf='start'
+    mb='1'
+  >
+    {event.start_date} to {event.end_date}
+  </Box>
+  <Link to={`/event/${event._id}`}>
+    <Image
+      height={60}
+      objectFit='cover'
+      src={event.image}
+      alt={event.title}
+    />
+  </Link>
+  <Box p='6' flex='1'>
+    <Box
+      mt='1'
+      fontWeight='semibold'
+      as='h4'
+      lineHeight='tight'
+      isTruncated
+    >
+      {event.title}
+    </Box>
+    <Box>
+      {event.location}
+      <Box as='span' color='gray.600' fontSize='sm'></Box>
+    </Box>
+    <Box display='flex' mt='2' alignItems='center'>
+      <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+        {event.attendeesCount} joined
+      </Box>
+    </Box>
+    <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
+      View Details
+    </Button>
+    {!updateable &&
+      <Button
+        colorScheme="blue"
+        onClick={() => {
+          if (!isUserAttending) {
+            handleJoinEvent(event._id);
+          }
+        }}
+        disabled={isUserAttending}
+      >
+        {isUserAttending ? "Joined" : "Join Event"}
+      </Button>
+    }
+    {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
+      Update Event
+    </Button>}
+    {updateable && <Button
+      colorScheme="red" // red color for delete
+      onClick={() => {
+        handleDeleteEvent(event._id);
+      }}
+    >
+      Delete Event
+    </Button>}
+  </Box>
+</Box>
 
-              <Box flex="1">
-                <Heading as="h4" size="md" mb="2">
-                {event.title}
-                </Heading>
-                <Text mb="2">
-                  {event.start_date} to {event.end_date}
-                </Text>
-                <Text fontSize="md" mb="2">
-                  {event.description}
-                </Text>
-                <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
-                  View Details
-                </Button>
-
-                {!updateable &&
-                  <Button
-                    colorScheme="blue"
-                    onClick={() => {
-                      if (!isUserAttending) {
-                        handleJoinEvent(event._id);
-                      }
-                    }}
-                    disabled={isUserAttending}
-                  >
-                    {isUserAttending ? "Joined" : "Join Event"}
-                  </Button>
-                  }
-               {/* update event button */}
-                {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
-                  Update Event
-                </Button>}
-                {/* {updateable && <Button as={Link} to={`/deleteevent/${event._id}`} colorScheme="blue" mr="2">
-                  Delete Event
-                </Button>} */}
-                {updateable && <Button
-                  colorScheme="red" // You can use red color for delete
-                  onClick={() => {
-                    handleDeleteEvent(event._id);
-                  }}
-                >
-                  Delete Event
-                </Button>}
-
-              </Box>
-              
-            </Box>
-          )
-        }
-        )}
-        </SimpleGrid>
+            )
+          }
+          )}
+      </SimpleGrid>
     </Box>
   );
 };
