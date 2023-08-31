@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_EVENT } from '../utils/mutations'; 
+import { ADD_EVENT } from '../utils/mutations';
+import { Box, Button, Input, Textarea, FormLabel } from '@chakra-ui/react';
 import FileBase64 from 'react-file-base64';
 
 const AddEvent = (props) => {
-  const [formState, setFormState] = useState({ //usestate is for data to re-render in the page
+  const [formState, setFormState] = useState({
     title: '',
     description: '',
     location: '',
     start_date: '',
     end_date: '',
     ticketInformation: '',
-    image: null
+    image: null,
   });
   const [addEvent, { error, data }] = useMutation(ADD_EVENT);
+
   const handleChange = (event) => {
-    const { name, value } = event.target;//get the name of the input field and the value of input field
+    const { name, value } = event.target;
     setFormState({
       ...formState,
       [name]: value,
     });
   };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -39,122 +42,121 @@ const AddEvent = (props) => {
       start_date: '',
       end_date: '',
       ticketInformation: '',
-      image: null
+      image: null,
     });
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Add Event</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! The event has been added.{' '}
-                <Link to="/">Back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Event Name"
-                  name="title"
-                  type="text"
-                  value={formState.title}
-                  onChange={handleChange}
-                />
-                <textarea
-                  name="description"
-                  placeholder="Event Description "
-                  onChange={handleChange}
-                  value={formState.description}></textarea >
-                <input
-                  className="form-input"
-                  placeholder="Event Start Date"
-                  name="start_date"
-                  type="date"
-                  value={formState.start_date}
-                  onChange={handleChange}
-                  min={new Date().toISOString().split('T')[0]}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Event End Date"
-                  name="end_date"
-                  type="date"
-                  value={formState.end_date}
-                  onChange={handleChange}
-                  min={formState.start_date}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Location"
-                  name="location"
-                  type="text"
-                  value={formState.location}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="ticketInformation"
-                  name="ticketInformation"
-                  type="text"
-                  value={formState.ticketInformation}
-                  onChange={handleChange}
-                />
-                {/* <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => {
-                    const selectedImage = event.target.files[0];
-                    setFormState({
-                      ...formState,
-                      image: selectedImage,
-                    });
-                  }}
-                /> */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => {
-                    const selectedImage = event.target.files[0];
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Box
+        width="100%"
+        maxWidth="650px"
+        padding="4"
+        border="1px solid lightgray"
+        borderRadius="md"
+        mt={4}
+      >
+        <h4 className="card-header bg-dark text-light p-2">Add Event</h4>
+        <Box as="div" className="card-body">
+          {data ? (
+            <p>
+              Success! The event has been added.{' '}
+              <Link to="/">Back to the homepage.</Link>
+            </p>
+          ) : (
+            <form onSubmit={handleFormSubmit}>
+              <FormLabel htmlFor="title">Event Name</FormLabel>
+              <Input
+                id="title"
+                placeholder="Event Name"
+                name="title"
+                type="text"
+                value={formState.title}
+                onChange={handleChange}
+                mb="2"
+              />
+              <FormLabel htmlFor="description">Event Description</FormLabel>
+              <Textarea
+                id="description"
+                placeholder="Event Description"
+                name="description"
+                value={formState.description}
+                onChange={handleChange}
+                mb="2"
+              />
+              <FormLabel htmlFor="start_date">Event Start Date</FormLabel>
+              <Input
+                id="start_date"
+                placeholder="Event Start Date"
+                name="start_date"
+                type="date"
+                value={formState.start_date}
+                onChange={handleChange}
+                min={new Date().toISOString().split('T')[0]}
+                mb="2"
+              />
+              <FormLabel htmlFor="end_date">Event End Date</FormLabel>
+              <Input
+                id="end_date"
+                placeholder="Event End Date"
+                name="end_date"
+                type="date"
+                value={formState.end_date}
+                onChange={handleChange}
+                min={formState.start_date}
+                mb="2"
+              />
+              <FormLabel htmlFor="location">Location</FormLabel>
+              <Input
+                id="location"
+                placeholder="Location"
+                name="location"
+                type="text"
+                value={formState.location}
+                onChange={handleChange}
+                mb="2"
+              />
+              <FormLabel htmlFor="ticketInformation">Ticket Information</FormLabel>
+              <Input
+                id="ticketInformation"
+                placeholder="Ticket Information"
+                name="ticketInformation"
+                type="text"
+                value={formState.ticketInformation}
+                onChange={handleChange}
+                mb="2"
+              />
+              <FormLabel>Event Image</FormLabel>
+              <FileBase64
+                type="file"
+                multiple={false}
+                onDone={({ base64 }) =>
+                  setFormState({ ...formState, image: base64 })
+                }
+              />
 
-                    if (selectedImage) {
-                      const reader = new FileReader();
-
-                      reader.onload = (e) => {
-                        const base64Image = e.target.result;
-                        setFormState({
-                          ...formState,
-                          image: base64Image,
-                        });
-                      };
-
-                      reader.readAsDataURL(selectedImage);
-                    }
-                  }}
-                />
-
-
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Add Event
-                </button>
-              </form>
-            )}
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </main>
+              <Button
+                colorScheme="blue"
+                type="submit"
+                mt="3"
+                w="100%"
+              >
+                Add Event
+              </Button>
+            </form>
+          )}
+          {error && (
+            <Box mt="3" p="3" bg="red.500" color="white">
+              {error.message}
+            </Box>
+          )}
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

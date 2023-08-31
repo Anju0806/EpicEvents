@@ -46,15 +46,11 @@ const UpdateEvent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Event:::",event);
-    console.log("stateevent",updatedEvent);
-    console.log("stateevent id",event);
-
     try {
       const { data } = await updateEvent({
         variables: {
-          eventId: eventId,
-          eventInput: updatedEvent, // Sending the updatedEvent state here
+          eventId: event.eventId,
+          eventInput: event.updatedEvent, // Sending the updatedEvent state here
         },
        
       }); console.log("Dataaaaa",data);
@@ -68,8 +64,7 @@ const UpdateEvent = () => {
     return <div>Loading...</div>;
   }
 
-  //console.log("EVENT", event);
-  //console.log("EVENT ID", eventId);
+  console.log("EVENT", event);
   
 
   return (
@@ -138,7 +133,7 @@ const UpdateEvent = () => {
                 placeholder="Event End Date"
                 name="end_date"
                 type="date"
-                defaultValue={event.end_date}
+                value={updatedEvent.end_date}
                 onChange={handleInputChange}
                 min={event.start_date}
               />
@@ -152,7 +147,7 @@ const UpdateEvent = () => {
                 name="ticketInformation"
                 type="text"
                /*  value={event.ticketInformation} */
-               defaultValue={event.ticketInformation}
+                value={updatedEvent.ticketInformation}
                 onChange={handleInputChange}
               />
             </div>
