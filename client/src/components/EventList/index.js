@@ -134,9 +134,11 @@ const EventList = ({
                       {event.attendeesCount} joined
                     </Box>
                   </Box>
+                  {!updateable &&
                   <Button as={Link} to={`/event/${event._id}`} colorScheme="#38714B" color="black" mr="2">
                     View Details
                   </Button>
+                   }
                   {!updateable &&
                     <Button
                       

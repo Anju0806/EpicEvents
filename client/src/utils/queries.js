@@ -32,6 +32,7 @@ export const QUERY_ME = gql`
       ticketInformation
       end_time
       image
+      attendeesCount
       attendees{
       _id 
     }

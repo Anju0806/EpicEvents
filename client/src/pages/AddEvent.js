@@ -142,7 +142,6 @@ const AddEvent = (props) => {
               />
 
               <Button
-                colorScheme="blue"
                 type="submit"
                 mt="3"
                 w="100%"
