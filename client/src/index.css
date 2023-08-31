@@ -1188,6 +1188,7 @@ label form [type='radio'] {
   max-width: 1500px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
 }
 
 .container.container-fluid {

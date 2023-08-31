@@ -13,7 +13,7 @@ const EventList = ({
   showTitle = true,
   showCreatedBy = true,
   triggerRefresh,
-  updateable
+  updateable,
 
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
@@ -134,12 +134,12 @@ const EventList = ({
                       {event.attendeesCount} joined
                     </Box>
                   </Box>
-                  <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
+                  <Button as={Link} to={`/event/${event._id}`} colorScheme="#38714B" color="black" mr="2">
                     View Details
                   </Button>
                   {!updateable &&
                     <Button
-                      colorScheme="blue"
+                      
                       onClick={() => {
                         if (!isUserAttending) {
                           handleJoinEvent(event._id);

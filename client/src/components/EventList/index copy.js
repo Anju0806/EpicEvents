@@ -13,7 +13,7 @@ const EventList = ({
   showTitle = true,
   showCreatedBy = true,
   triggerRefresh,
-  updateable
+  updateable,
 
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
@@ -90,79 +90,79 @@ const EventList = ({
             // console.log(Auth.getProfile().data._id);
             return (
               <Box
-  key={event._id}
-  maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'
-  display='flex'
-  flexDirection='column'
-  alignItems='start'
->
-  <Box
-    color='gray.500'
-    fontWeight='semibold'
-    letterSpacing='wide'
-    fontSize='xs'
-    textTransform='uppercase'
-    alignSelf='start'
-    mb='1'
-  >
-    {event.start_date} to {event.end_date}
-  </Box>
-  <Link to={`/event/${event._id}`}>
-    <Image
-      height={60}
-      objectFit='cover'
-      src={event.image}
-      alt={event.title}
-    />
-  </Link>
-  <Box p='6' flex='1'>
-    <Box
-      mt='1'
-      fontWeight='semibold'
-      as='h4'
-      lineHeight='tight'
-      isTruncated
-    >
-      {event.title}
-    </Box>
-    <Box>
-      {event.location}
-      <Box as='span' color='gray.600' fontSize='sm'></Box>
-    </Box>
-    <Box display='flex' mt='2' alignItems='center'>
-      <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-        {event.attendeesCount} joined
-      </Box>
-    </Box>
-    <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
-      View Details
-    </Button>
-    {!updateable &&
-      <Button
-        colorScheme="blue"
-        onClick={() => {
-          if (!isUserAttending) {
-            handleJoinEvent(event._id);
-          }
-        }}
-        disabled={isUserAttending}
-      >
-        {isUserAttending ? "Joined" : "Join Event"}
-      </Button>
-    }
-    {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
-      Update Event
-    </Button>}
-    {updateable && <Button
-      colorScheme="red" // red color for delete
-      onClick={() => {
-        handleDeleteEvent(event._id);
-      }}
-    >
-      Delete Event
-    </Button>}
-  </Box>
-</Box>
+                key={event._id}
+                maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'
+                display='flex'
+                flexDirection='column'
+                alignItems='start'
+              >
+                <Box
+                  color='gray.500'
+                  fontWeight='semibold'
+                  letterSpacing='wide'
+                  fontSize='xs'
+                  textTransform='uppercase'
+                  alignSelf='start'
+                  mb='1'
+                >
+                  {event.start_date} to {event.end_date}
+                </Box>
+                <Link to={`/event/${event._id}`}>
+                  <Image
+                    height={60}
+                    objectFit='cover'
+                    src={event.image}
+                    alt={event.title}
+                  />
+                </Link>
+                <Box p='6' flex='1'>
+                  <Box
+                    mt='1'
+                    fontWeight='semibold'
+                    as='h4'
+                    lineHeight='tight'
+                    isTruncated
+                  >
+                    {event.title}
+                  </Box>
+                  <Box>
+                    {event.location}
+                    <Box as='span' color='gray.600' fontSize='sm'></Box>
+                  </Box>
+                  <Box display='flex' mt='2' alignItems='center'>
+                    <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+                      {event.attendeesCount} joined
+                    </Box>
+                  </Box>
+                  <Button as={Link} to={`/event/${event._id}`} colorScheme="blue" mr="2">
+                    View Details
+                  </Button>
+                  {!updateable &&
+                    <Button
+                      colorScheme="blue"
+                      onClick={() => {
+                        if (!isUserAttending) {
+                          handleJoinEvent(event._id);
+                        }
+                      }}
+                      disabled={isUserAttending}
+                    >
+                      {isUserAttending ? "Joined" : "Join Event"}
+                    </Button>
+                  }
+                  {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
+                    Update Event
+                  </Button>}
+                  {updateable && <Button
+                    colorScheme="red" // red color for delete
+                    onClick={() => {
+                      handleDeleteEvent(event._id);
+                    }}
+                  >
+                    Delete Event
+                  </Button>}
+                </Box>
+              </Box>
 
             )
           }

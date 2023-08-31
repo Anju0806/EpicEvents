@@ -24,7 +24,7 @@ const SearchForm = ({ onSearch }) => {
       bg="#F5E3CB"
       p={6}
       borderRadius="lg" // Add rounded corners
-      mt={4} // Add margin space above the form
+      mt={2} // Add margin space above the form
       mb={12}
     >
       <form onSubmit={handleSearch}>
