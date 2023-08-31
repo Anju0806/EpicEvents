@@ -20,7 +20,7 @@ const Navbar = () => {
 
 
   return (
-    <Flex bg="#194C47" p={5} color="white" minWidth='max-content' alignItems='center' gap='2' >
+    <Flex bg="#38714B" p={0} color="white" minWidth='max-content' alignItems='center' gap='2' >
       <Box p='2'>
         <Link to="/">
           <Heading size='md' >Epic Events</Heading>
