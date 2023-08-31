@@ -60,21 +60,37 @@ const Home = () => {
 
   return (
     <main>
+    <div className="flex-row justify-center">
+       <div className="col-12 col-md-12 mb-3">
+        <SearchForm onSearch={handleSearch} />
+        {isSearching ? ( // Display either search results or original events list
+          <div>
+            <button onClick={handleBackToEvents}>Back to All Events</button>
+            <EventList events={filteredEvents.length > 0 ? filteredEvents : events}  />
+          </div>
+        ) : (
+          
+          <EventList events={events} triggerRefresh={refreshHandler} />
+        )}
+      </div> 
+    </div>
+  </main>
+   /*  <main>
       <div className="flex-row justify-center">
          <div className="col-12 col-md-12 mb-3">
           <SearchForm onSearch={handleSearch} />
           {isSearching ? ( // Display either search results or original events list
             <div>
               <button onClick={handleBackToEvents}>Back to All Events</button>
-              <EventList events={filteredEvents.length > 0 ? filteredEvents : events} title="Join the Event..." />
+              <EventList events={filteredEvents.length > 0 ? filteredEvents : events} title="Join the Event with a click..." />
             </div>
           ) : (
             
-            <EventList events={events} triggerRefresh={refreshHandler} title="Join the Events..." />
+            <EventList events={events} triggerRefresh={refreshHandler} title="Join the Event with a click..." />
           )}
         </div> 
       </div>
-    </main>
+    </main> */
   );
 };
 

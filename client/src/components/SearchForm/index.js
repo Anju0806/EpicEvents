@@ -25,7 +25,7 @@ const SearchForm = ({ onSearch }) => {
       p={6}
       borderRadius="lg" // Add rounded corners
       mt={4} // Add margin space above the form
-      mb={7}
+      mb={12}
     >
       <form onSubmit={handleSearch}>
         <FormControl as="fieldset">
