@@ -32,9 +32,9 @@ const SearchForm = ({ onSearch }) => {
           <FormLabel htmlFor="email" >
           <Center h="70px" fontWeight="bold">
               <Box
-                fontSize="xl" // Increase font size
-                color="#38714B" // Apply a custom color
-                textAlign="center" // Center align the text
+                fontSize="xl" 
+                color="#38714B" 
+                textAlign="center" 
               >
                 Discover Events Happening in Your City
               </Box>

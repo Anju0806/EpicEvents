@@ -81,9 +81,9 @@ const EventList = ({
 
   return (
     <Box>
-      {showTitle && <Heading as="h3">{title}</Heading>}
+      {showTitle && <Box >{title}</Box>}
 
-      <SimpleGrid columns={[2, null, 3]} spacingX='40px' spacingY='25px' >
+      <SimpleGrid columns={[1, 2, 3]} spacingX='40px' spacingY='25px' >
         {events &&
           events.map((event) => {
             const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);

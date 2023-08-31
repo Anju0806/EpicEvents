@@ -52,7 +52,7 @@ const AddEvent = (props) => {
       justifyContent="center"
       alignItems="center"
     >
-      <Box
+      <Box textAlign="center" 
         width="100%"
         maxWidth="650px"
         padding="4"
@@ -60,7 +60,9 @@ const AddEvent = (props) => {
         borderRadius="md"
         mt={4}
       >
-        <h4 className="card-header bg-dark text-light p-2">Add Event</h4>
+        <Box bg="#EACB9F" color="white" p="2" rounded="md" fontWeight="bold">
+          <h3 className="card-header text-black">Add Event Details</h3>
+        </Box>
         <Box as="div" className="card-body">
           {data ? (
             <p>

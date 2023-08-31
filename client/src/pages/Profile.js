@@ -1,8 +1,8 @@
 import React from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import EventList from '../components/EventList';
-import { Link } from 'react-router-dom';
+import { Box, Heading, Text, Link as ChakraLink } from '@chakra-ui/react';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
@@ -16,6 +16,7 @@ const Profile = () => {
   });
 
   const user = data?.me || data?.user || {};
+
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
@@ -27,51 +28,67 @@ const Profile = () => {
 
   if (!user?.username) {
     return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
-      </h4>
+      <Box>
+        <Heading as="h4" mb="4">
+          You need to be logged in to see this. Use the navigation links above to
+          sign up or log in!
+        </Heading>
+      </Box>
     );
   }
 
   return (
-    <div>
-      <div className="flex-row justify-center mb-3">
-        <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-        </h2>
-        <div className="col-12 col-md-10 mb-5">
-          <h3>Profile Details:</h3>
-          <p>Username: {user.username}</p>
-          <p>Email: {user.email}</p>
-        </div>
-        {/* Display User's Events */}
-        <div className="col-12 col-md-10 mb-5">
-          
-          {user.events.length === 0 ? (
-            <p>No events created by {user.username}.</p>
-          ) : (
-            <EventList events={user.events} updateable={true} title={`${user.username}'s events...`} />
-          )}
-        </div>
+    <Box display="flex"
+      justifyContent="center"
+      alignItems="center">
+      <Box
+        width="100%"
+        maxWidth="1000px"
+        padding="4"
+        border="1px solid lightgray"
+        borderRadius="md"
+        mt={4}
+      >
 
-       {/*  <div className="col-12 col-md-10 mb-5">
-          <EventList
-            events={user.events}
-            title={`${user.username}'s thoughts...`}
-            showTitle={false}
-            showUsername={false}
-          />
-          
-        </div> */}
-       {/* Display Event Form */}
-       {!userParam && (
-            
-            <Link to="/addevent">Create a new Event</Link>
-          
-        )}
-      </div>
-    </div>
+        {/*  <Heading
+          as="h3"
+          bg="#EACB9F"  p="1" rounded="md" fontWeight="bold">
+          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
+        </Heading> */}
+        <Box mb={5} >
+          {/* {!userParam && (
+            <ChakraLink as={Link} to="/addevent">
+              Create a new Event
+            </ChakraLink>
+          )} */}
+          {/* <Heading as="h4" mb="2">
+            Profile Details:
+          </Heading> */}
+          <Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex">
+            <h3 className="card-header text-black">Profile Details</h3>
+          </Box>
+          <Text>Username: {user.username}</Text>
+          <Text>Email: {user.email}</Text>
+        </Box>
+        {/* Display User's Events */}
+        <Box >
+          {user.events.length === 0 ? (
+            <Text>No events created by {user.username}.</Text>
+          ) : (
+            <EventList
+              events={user.events}
+              updateable={true}
+              // title={`Viewing events created by ${user.username}` }
+              title={<Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex" >
+                <h3 className="card-header text-black">Events Created by {user.username}</h3>
+              </Box>}
+            />
+          )}
+        </Box>
+
+        {/* Display Event Form */}
+      </Box>
+    </Box>
   );
 };
 
