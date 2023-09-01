@@ -8,7 +8,20 @@ export const QUERY_USER = gql`
       email
       events {
       _id
-      
+      title
+      description
+      location
+      createdAt
+      start_date
+      end_date
+      start_time
+      ticketInformation
+      end_time
+      image
+      attendeesCount
+      attendees{
+      _id 
+    }
     }
     }
   }
