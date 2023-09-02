@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heading, Badge, Button, Image, Box, } from '@chakra-ui/react';
+import { Heading, Badge, Image, Box, Button } from '@chakra-ui/react';
 import { JOIN_EVENT, DELETE_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import { SimpleGrid } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar,faMapMarker } from '@fortawesome/free-solid-svg-icons';
-
+import { faStar, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 
 const EventList = ({
   events,
@@ -16,7 +15,6 @@ const EventList = ({
   showCreatedBy = true,
   triggerRefresh,
   updateable,
-
 }) => {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [deleteEvent] = useMutation(DELETE_EVENT);
@@ -34,6 +32,7 @@ const EventList = ({
   useEffect(() => {
     //  trigger whenever the state changes, updating the button's disabled state.
   }, [joinedEvents]);
+
   const handleDeleteEvent = async (eventId) => {
     try {
       const { data } = await deleteEvent({
@@ -50,6 +49,7 @@ const EventList = ({
       console.error(error);
     }
   };
+
   const handleJoinEvent = async (eventId) => {
     try {
       if (!Auth.loggedIn()) {
@@ -79,7 +79,6 @@ const EventList = ({
     return <Heading as="h3">No Events Yet</Heading>;
   }
 
-
   return (
     <Box>
       {showTitle && <Box >{title}</Box>}
@@ -88,7 +87,7 @@ const EventList = ({
         {events &&
           events.map((event) => {
             const isUserAttending = event.attendees.some(attendee => attendee._id === user_id);
-            // console.log(Auth.getProfile().data._id);
+
             return (
               <Box
                 backgroundColor={"#F7F8F8"}
@@ -98,15 +97,6 @@ const EventList = ({
                 flexDirection='column'
                 alignItems='start'
               >
-
-                {/* <Link to={`/event/${event._id}`}>
-                  <Image
-                    height={60}
-                    objectFit='cover'
-                    src={event.image}
-                    alt={event.title}
-                  />
-                </Link> */}
                 <Link to={`/event/${event._id}`}>
                   <div
                     style={{
@@ -147,84 +137,84 @@ const EventList = ({
                         background: 'rgba(0, 0, 0, 0.7)',
                         color: 'white',
                         zIndex: '1',
-                        display: 'inline-block', // Allow the background to fit the title
-                        whiteSpace: 'nowrap', // Prevent line breaks
-                        overflow: 'hidden', // Hide overflow if the title is too long
-                        textOverflow: 'ellipsis', // Show ellipsis (...) for long titles
+                        display: 'inline-block',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        fontWeight: 'bold'
                       }}
                     >
-                      {event.title}
-
-
+                      <Box display="flex" alignItems="center">
+                        <span>{event.title}</span>
+                      </Box>
                     </div>
                   </div>
                 </Link>
 
+                <Box p='5' flex='1'>
+                  <Link to={`/event/${event._id}`}>
+                    <Box
+                      color='gray.600'
+                      fontWeight='bold'
+                      letterSpacing='wide'
+                      fontSize='xs'
+                      textTransform='uppercase'
+                      alignSelf='start'
 
-
-                <Box p='6' flex='1'>
-                  <Box
-                    color='gray.500'
-                    fontWeight='semibold'
-                    letterSpacing='wide'
-                    fontSize='xs'
-                    textTransform='uppercase'
-                    alignSelf='start'
-                    mb='1'
-                  >
-                    {event.start_date} to {event.end_date}
-                  </Box>
-                  {/* <Box
-                    mt='1'
-                    fontWeight='semibold'
-                    as='h4'
-                    lineHeight='tight'
-                    isTruncated
-                  >
-                   {event.start_date} to {event.end_date}
-                  </Box> */}
-                  <Box>
-                  <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px',  color: '#D0B88A' }} />
+                    >
+                      {event.start_date} to {event.end_date}
+                    </Box></Link>
+                  {/* <Box>
+                    <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A' }} />
                     {event.location}
                     <Box as='span' color='gray.600' fontSize='sm'></Box>
-                  </Box>
-                  {/* <Box display='flex' mt='2' alignItems='center'>
-                    <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-                      {event.attendeesCount} joined
-                    </Box>
                   </Box> */}
-                  {/* {!updateable &&
-                    <Button as={Link} to={`/event/${event._id}`} colorScheme="#38714B" color="black" mr="2">
-                      View Details
-                    </Button>
-                  } */}
-                  {!updateable &&
-                    <Button
+                  <a
+                    href={`https://www.google.com/maps/search/?q=${encodeURIComponent(event.location)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Box>
+                      <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A' }} />
+                      {event.location}
+                      <Box as='span' color='gray.600' fontSize='sm'></Box>
+                    </Box>
+                  </a>
 
+
+                  {!updateable &&
+                    <Box
                       onClick={() => {
                         if (!isUserAttending) {
                           handleJoinEvent(event._id);
                         }
                       }}
                       disabled={isUserAttending}
+                      display="flex"
+                      alignItems="center"
+                      color={isUserAttending ? 'Grey' : '#A5761E'}
+                      cursor="pointer" // Add cursor pointer on hover
+                      transition="color 0.2s" // Add smooth color transition on hover
+                      _hover={{ color: isUserAttending ? 'A5761E' : '#38714B' }} // Change color on hover
                     >
-                      {isUserAttending ? "Joined" : "Join Event"}
-                    </Button>
-                  }
-                  {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
-                    Update Event
-                  </Button>}
-                  {updateable && <Button
-                    colorScheme="red" // red color for delete
-                    onClick={() => {
-                      handleDeleteEvent(event._id);
-                    }}
-                  >
-                    Delete Event
-                  </Button>}
-                </Box>
-              </Box>
+                      <FontAwesomeIcon icon={faStar} style={{ marginRight: '5px', color: 'Grey' }} />
+                      <span>{isUserAttending ? "Joined" : "Join Event"}</span>
+                    </Box>
 
+                  }
+                </Box>
+                {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
+                  Update Event
+                </Button>}
+                {updateable && <Button
+                  colorScheme="red" // red color for delete
+                  onClick={() => {
+                    handleDeleteEvent(event._id);
+                  }}
+                >
+                  Delete Event
+                </Button>}
+              </Box>
             )
           }
           )}
@@ -234,8 +224,3 @@ const EventList = ({
 };
 
 export default EventList;
-
-
-
-
-
