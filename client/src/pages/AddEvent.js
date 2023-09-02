@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_EVENT } from '../utils/mutations';
-import { Box, Button, Input, Textarea, FormLabel } from '@chakra-ui/react';
+import { Box, Button, Input, Textarea, FormLabel, FormControl } from '@chakra-ui/react';
 import FileBase64 from 'react-file-base64';
 
 const AddEvent = (props) => {
@@ -71,6 +71,7 @@ const AddEvent = (props) => {
             </p>
           ) : (
             <form onSubmit={handleFormSubmit}>
+               <FormControl isRequired>
               <FormLabel htmlFor="title">Event Name</FormLabel>
               <Input
                 id="title"
@@ -80,7 +81,8 @@ const AddEvent = (props) => {
                 value={formState.title}
                 onChange={handleChange}
                 mb="2"
-              />
+              /></FormControl>
+              <FormControl isRequired>
               <FormLabel htmlFor="description">Event Description</FormLabel>
               <Textarea
                 id="description"
@@ -89,8 +91,9 @@ const AddEvent = (props) => {
                 value={formState.description}
                 onChange={handleChange}
                 mb="2"
-              />
+              /></FormControl>
               <FormLabel htmlFor="start_date">Event Start Date</FormLabel>
+              <FormControl isRequired>
               <Input
                 id="start_date"
                 placeholder="Event Start Date"
@@ -100,8 +103,9 @@ const AddEvent = (props) => {
                 onChange={handleChange}
                 min={new Date().toISOString().split('T')[0]}
                 mb="2"
-              />
+              /></FormControl>
               <FormLabel htmlFor="end_date">Event End Date</FormLabel>
+              <FormControl isRequired>
               <Input
                 id="end_date"
                 placeholder="Event End Date"
@@ -111,8 +115,9 @@ const AddEvent = (props) => {
                 onChange={handleChange}
                 min={formState.start_date}
                 mb="2"
-              />
+              /></FormControl>
               <FormLabel htmlFor="location">Location</FormLabel>
+              <FormControl isRequired>
               <Input
                 id="location"
                 placeholder="Location"
@@ -121,8 +126,9 @@ const AddEvent = (props) => {
                 value={formState.location}
                 onChange={handleChange}
                 mb="2"
-              />
+              /></FormControl>
               <FormLabel htmlFor="ticketInformation">Ticket Information</FormLabel>
+              <FormControl isRequired>
               <Input
                 id="ticketInformation"
                 placeholder="Ticket Information"
@@ -131,7 +137,7 @@ const AddEvent = (props) => {
                 value={formState.ticketInformation}
                 onChange={handleChange}
                 mb="2"
-              />
+              /></FormControl>
               <FormLabel>Event Image</FormLabel>
               <FileBase64
                 type="file"
