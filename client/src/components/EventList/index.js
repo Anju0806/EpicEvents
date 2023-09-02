@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heading, Text, Link as ChakraLink, Button, Image, Box } from '@chakra-ui/react';
+import { Heading, Badge, Button, Image, Box, } from '@chakra-ui/react';
 import { JOIN_EVENT, DELETE_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import { SimpleGrid } from '@chakra-ui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 
 const EventList = ({
@@ -119,6 +121,21 @@ const EventList = ({
                       alt={event.title}
                       borderRadius='6px'
                     />
+                    {event.attendeesCount > 0 && (
+                      <Badge
+                        colorScheme='yellow'
+                        position='absolute'
+                        top='0'
+                        right='0'
+                        mr='2'
+                        mt='2'
+                        borderRadius='50%'
+                        p='2'
+                      >
+                        <FontAwesomeIcon icon={faStar} color='gold' />
+                        <span style={{ marginLeft: '5px' }}>{event.attendeesCount} joined</span>
+                      </Badge>
+                    )}
                     <div
                       style={{
                         position: 'absolute',
@@ -137,6 +154,8 @@ const EventList = ({
                       }}
                     >
                       {event.title}
+
+
                     </div>
                   </div>
                 </Link>
