@@ -117,7 +117,7 @@ const EventList = ({
                       objectFit='cover'
                       src={event.image}
                       alt={event.title}
-                      borderRadius='12px'
+                      borderRadius='6px'
                     />
                     <div
                       style={{
