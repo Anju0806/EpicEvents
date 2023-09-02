@@ -89,81 +89,41 @@ const EventList = ({
             // console.log(Auth.getProfile().data._id);
             return (
               <Box
-                backgroundColor={"#F7F8F8"}
                 key={event._id}
                 maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'
                 display='flex'
                 flexDirection='column'
                 alignItems='start'
               >
-
-                {/* <Link to={`/event/${event._id}`}>
+                <Box
+                  color='gray.500'
+                  fontWeight='semibold'
+                  letterSpacing='wide'
+                  fontSize='xs'
+                  textTransform='uppercase'
+                  alignSelf='start'
+                  mb='1'
+                >
+                  {event.start_date} to {event.end_date}
+                </Box>
+                <Link to={`/event/${event._id}`}>
                   <Image
                     height={60}
                     objectFit='cover'
                     src={event.image}
                     alt={event.title}
                   />
-                </Link> */}
-                <Link to={`/event/${event._id}`}>
-                  <div
-                    style={{
-                      position: 'relative',
-                      width: '100%',
-                    }}
-                  >
-                    <Image
-                      height={60}
-                      objectFit='cover'
-                      src={event.image}
-                      alt={event.title}
-                      borderRadius='12px'
-                    />
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: '6px',
-                        left: '3px',
-                        padding: '10px',
-                        paddingRight: '50px',
-                        textAlign: 'left',
-                        background: 'rgba(0, 0, 0, 0.7)',
-                        color: 'white',
-                        zIndex: '1',
-                        display: 'inline-block', // Allow the background to fit the title
-                        whiteSpace: 'nowrap', // Prevent line breaks
-                        overflow: 'hidden', // Hide overflow if the title is too long
-                        textOverflow: 'ellipsis', // Show ellipsis (...) for long titles
-                      }}
-                    >
-                      {event.title}
-                    </div>
-                  </div>
                 </Link>
-
-
-
                 <Box p='6' flex='1'>
                   <Box
-                    color='gray.500'
-                    fontWeight='semibold'
-                    letterSpacing='wide'
-                    fontSize='xs'
-                    textTransform='uppercase'
-                    alignSelf='start'
-                    mb='1'
-                  >
-                    {event.start_date} to {event.end_date}
-                  </Box>
-                  {/* <Box
                     mt='1'
                     fontWeight='semibold'
                     as='h4'
                     lineHeight='tight'
                     isTruncated
                   >
-                   {event.start_date} to {event.end_date}
-                  </Box> */}
+                    {event.title}
+                  </Box>
                   <Box>
                     {event.location}
                     <Box as='span' color='gray.600' fontSize='sm'></Box>
@@ -173,14 +133,14 @@ const EventList = ({
                       {event.attendeesCount} joined
                     </Box>
                   </Box>
-                  {/* {!updateable &&
-                    <Button as={Link} to={`/event/${event._id}`} colorScheme="#38714B" color="black" mr="2">
-                      View Details
-                    </Button>
-                  } */}
+                  {!updateable &&
+                  <Button as={Link} to={`/event/${event._id}`} colorScheme="#38714B" color="black" mr="2">
+                    View Details
+                  </Button>
+                   }
                   {!updateable &&
                     <Button
-
+                      
                       onClick={() => {
                         if (!isUserAttending) {
                           handleJoinEvent(event._id);

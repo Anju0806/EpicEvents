@@ -45,12 +45,12 @@ const Contact = () => {
     justifyContent="center"
     alignItems="center">
     <Box width="100%"
-    maxWidth="650px"
+    maxWidth="500px"
     padding="4"
     border="1px solid lightgray"
     borderRadius="md"
-    mt={4} >
-      <Box bg="#EACB9F"  p="2" rounded="md" fontWeight="bold">
+    mt={4}  >
+      <Box bg="#EACB9F"  p="2" rounded="md" fontWeight="bold" textAlign="center">
           <h3 className="card-header text-black">Contact Us</h3>
         </Box>
       <form onSubmit={handleSubmit}>
