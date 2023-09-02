@@ -50,20 +50,7 @@ const Profile = () => {
         mt={4}
       >
 
-        {/*  <Heading
-          as="h3"
-          bg="#EACB9F"  p="1" rounded="md" fontWeight="bold">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-        </Heading> */}
         <Box mb={5} >
-          {/* {!userParam && (
-            <ChakraLink as={Link} to="/addevent">
-              Create a new Event
-            </ChakraLink>
-          )} */}
-          {/* <Heading as="h4" mb="2">
-            Profile Details:
-          </Heading> */}
           <Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex">
             <h3 className="card-header text-black">Profile Details</h3>
           </Box>

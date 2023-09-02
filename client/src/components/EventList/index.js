@@ -194,7 +194,7 @@ const EventList = ({
                       alignItems="center"
                       color={isUserAttending ? 'Grey' : '#A5761E'}
                       cursor="pointer" // Add cursor pointer on hover
-                      transition="color 0.2s" // Add smooth color transition on hover
+                      transition="color 0.2s"
                       _hover={{ color: isUserAttending ? 'A5761E' : '#38714B' }} // Change color on hover
                     >
                       <FontAwesomeIcon icon={faStar} style={{ marginRight: '5px', color: 'Grey' }} />
@@ -203,17 +203,58 @@ const EventList = ({
 
                   }
                 </Box>
-                {updateable && <Button as={Link} to={`/updateevent/${event._id}`} colorScheme="blue" mr="2">
+                {/* {updateable && <Button width="100%" mb={'0.5'} as={Link} to={`/updateevent/${event._id}`} 
+                 colorScheme="orange" _hover={{ colorScheme: "gray" }}>
                   Update Event
-                </Button>}
-                {updateable && <Button
-                  colorScheme="red" // red color for delete
+                </Button>} */}
+                {updateable && (
+                  <Button
+                    width="100%"
+                    mb="0.5"
+                    as={Link}
+                    to={`/updateevent/${event._id}`}
+                    color="black" // Button text color
+                    bg="#EACB9F"    // Button background color
+                    _hover={{
+                      color: "black", // Text color on hover
+                      bg: "#38714B",    // Background color on hover
+                    }}
+                  >
+                    Update Event
+                  </Button>
+                )}
+
+
+                {/* {updateable &&
+                 <Button width="100%" 
+                 color="gray.600" // Button text color
+                 bg="#EACB9F"    // Button background color
+                 _hover={{
+                  color: "black", // Text color on hover
+                   bg: "red",    // Background color on hover
+                 }}
                   onClick={() => {
                     handleDeleteEvent(event._id);
                   }}
                 >
-                  Delete Event
-                </Button>}
+                  Delete Event</Button>} */}
+                {updateable && (
+                  <Button
+                    width="100%"
+                    color="gray !important" // Button text color
+                    bg="#EACB9F !important"    // Button background color
+                    _hover={{
+                      color: "white !important", // Text color on hover
+                      bg: "#CB442C !important",    // Background color on hover
+                    }}
+                    onClick={() => {
+                      handleDeleteEvent(event._id);
+                    }}
+                  >
+                    Delete Event
+                  </Button>
+                )}
+
               </Box>
             )
           }
