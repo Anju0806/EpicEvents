@@ -6,7 +6,7 @@ import { JOIN_EVENT, DELETE_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import { SimpleGrid } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar,faMapMarker } from '@fortawesome/free-solid-svg-icons';
 
 
 const EventList = ({
@@ -184,14 +184,15 @@ const EventList = ({
                    {event.start_date} to {event.end_date}
                   </Box> */}
                   <Box>
+                  <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px',  color: '#D0B88A' }} />
                     {event.location}
                     <Box as='span' color='gray.600' fontSize='sm'></Box>
                   </Box>
-                  <Box display='flex' mt='2' alignItems='center'>
+                  {/* <Box display='flex' mt='2' alignItems='center'>
                     <Box as='span' ml='2' color='gray.600' fontSize='sm'>
                       {event.attendeesCount} joined
                     </Box>
-                  </Box>
+                  </Box> */}
                   {/* {!updateable &&
                     <Button as={Link} to={`/event/${event._id}`} colorScheme="#38714B" color="black" mr="2">
                       View Details
