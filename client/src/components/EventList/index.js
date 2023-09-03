@@ -174,8 +174,8 @@ const EventList = ({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Box>
-                      <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A' }} />
+                    <Box _hover={{ color: '#38714B' }}>
+                      <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A', transition: 'color 0.3s',}} />
                       {event.location}
                       <Box as='span' color='gray.600' fontSize='sm'></Box>
                     </Box>
@@ -195,9 +195,9 @@ const EventList = ({
                       color={isUserAttending ? 'Grey' : '#A5761E'}
                       cursor="pointer" // Add cursor pointer on hover
                       transition="color 0.2s"
-                      _hover={{ color: isUserAttending ? 'A5761E' : '#38714B' }} // Change color on hover
+                      _hover={{ color: isUserAttending ? '#A5761E' : '#38714B' }} // Change color on hover
                     >
-                      <FontAwesomeIcon icon={faStar} style={{ marginRight: '5px', color: 'Grey' }} />
+                      <FontAwesomeIcon icon={faStar} style={{ marginRight: '5px', color: 'Gold 700' }} />
                       <span>{isUserAttending ? "Joined" : "Join Event"}</span>
                     </Box>
 
