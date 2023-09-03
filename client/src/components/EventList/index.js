@@ -132,7 +132,6 @@ const EventList = ({
                         bottom: '6px',
                         left: '3px',
                         padding: '10px',
-                        paddingRight: '50px',
                         textAlign: 'left',
                         background: 'rgba(0, 0, 0, 0.7)',
                         color: 'white',

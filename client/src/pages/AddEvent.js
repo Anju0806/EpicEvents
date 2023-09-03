@@ -47,10 +47,11 @@ const AddEvent = (props) => {
   };
 
   return (
-    <Box
+    <Box 
       display="flex"
       justifyContent="center"
       alignItems="center"
+      
     >
       <Box textAlign="center" 
         width="100%"
@@ -59,6 +60,7 @@ const AddEvent = (props) => {
         border="1px solid lightgray"
         borderRadius="md"
         mt={4}
+        backgroundColor={"#F7F8F8"}
       >
         <Box bg="#EACB9F" color="white" p="2" rounded="md" fontWeight="bold">
           <h3 className="card-header text-black">Add Event Details</h3>
@@ -92,8 +94,8 @@ const AddEvent = (props) => {
                 onChange={handleChange}
                 mb="2"
               /></FormControl>
-              <FormLabel htmlFor="start_date">Event Start Date</FormLabel>
               <FormControl isRequired>
+              <FormLabel htmlFor="start_date">Event Start Date</FormLabel>
               <Input
                 id="start_date"
                 placeholder="Event Start Date"
@@ -104,8 +106,8 @@ const AddEvent = (props) => {
                 min={new Date().toISOString().split('T')[0]}
                 mb="2"
               /></FormControl>
-              <FormLabel htmlFor="end_date">Event End Date</FormLabel>
               <FormControl isRequired>
+              <FormLabel htmlFor="end_date">Event End Date</FormLabel>
               <Input
                 id="end_date"
                 placeholder="Event End Date"
@@ -116,8 +118,8 @@ const AddEvent = (props) => {
                 min={formState.start_date}
                 mb="2"
               /></FormControl>
-              <FormLabel htmlFor="location">Location</FormLabel>
               <FormControl isRequired>
+              <FormLabel htmlFor="location">Location</FormLabel>
               <Input
                 id="location"
                 placeholder="Location"
@@ -127,8 +129,8 @@ const AddEvent = (props) => {
                 onChange={handleChange}
                 mb="2"
               /></FormControl>
-              <FormLabel htmlFor="ticketInformation">Ticket Information</FormLabel>
               <FormControl isRequired>
+              <FormLabel htmlFor="ticketInformation">Ticket Information</FormLabel>
               <Input
                 id="ticketInformation"
                 placeholder="Ticket Information"

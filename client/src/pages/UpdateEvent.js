@@ -67,6 +67,7 @@ const UpdateEvent = () => {
       justifyContent="center"
       alignItems="center">
       <Box
+      backgroundColor={"#F7F8F8"}
         width="100%"
         maxWidth="650px"
         padding="4"
@@ -88,7 +89,7 @@ const UpdateEvent = () => {
 
 
 
-            <FormControl mb="3">
+            <FormControl mb="3" isRequired>
               <FormLabel>Title:</FormLabel>
               <Input
                 type="text"
@@ -97,15 +98,15 @@ const UpdateEvent = () => {
                 onChange={handleInputChange}
               />
             </FormControl>
-            <FormControl mb="3">
+            <FormControl mb="3" isRequired>
               <FormLabel>Description:</FormLabel>
               <Textarea
                 name="description"
                 defaultValue={event.description}
                 onChange={handleInputChange}
               />
-            </FormControl>
-            <FormControl mb="3">
+            </FormControl >
+            <FormControl mb="3" isRequired>
               <FormLabel>Location:</FormLabel>
               <Input
                 type="text"
@@ -114,7 +115,7 @@ const UpdateEvent = () => {
                 onChange={handleInputChange}
               />
             </FormControl>
-            <FormControl mb="3">
+            <FormControl mb="3" isRequired>
               <FormLabel>Start Date and Time:</FormLabel>
               <Input
                 placeholder="Event Start Date"
@@ -125,7 +126,7 @@ const UpdateEvent = () => {
                 min={new Date().toISOString().split('T')[0]}
               />
             </FormControl>
-            <FormControl mb="3">
+            <FormControl mb="3" isRequired>
               <FormLabel>End Date:</FormLabel>
               <Input
                 placeholder="Event End Date"
@@ -136,7 +137,7 @@ const UpdateEvent = () => {
                 min={event.start_date}
               />
             </FormControl>
-            <FormControl mb="3">
+            <FormControl mb="3" isRequired>
               <FormLabel>Ticket Information:</FormLabel>
               <Input
                 placeholder="Ticket Information"
