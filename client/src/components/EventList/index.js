@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heading, Badge, Image, Box, Button } from '@chakra-ui/react';
+import { Heading, Badge, Image, Box, Button, Center } from '@chakra-ui/react';
 import { JOIN_EVENT, DELETE_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import { SimpleGrid } from '@chakra-ui/react'
@@ -216,7 +216,7 @@ const EventList = ({
                     color="black" // Button text color
                     bg="#EACB9F"    // Button background color
                     _hover={{
-                      color: "black", // Text color on hover
+                      color: "white", // Text color on hover
                       bg: "#38714B",    // Background color on hover
                     }}
                   >
