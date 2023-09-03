@@ -64,6 +64,10 @@ To run Epic Events locally, follow these steps:
 - Styling: CSS, Chakra UI
 
 ## Screenshots
+<img width="1440" alt="Screenshot1" src="https://github.com/Anju0806/EpicEvents/assets/126565826/86a2506f-d458-457a-8059-d50f537eb8da">
+<img width="1440" alt="Screenshot2" src="https://github.com/Anju0806/EpicEvents/assets/126565826/3cc26e78-3be7-44da-9c7a-7768e03e03ac">
+<img width="1440" alt="Screenshot3" src="https://github.com/Anju0806/EpicEvents/assets/126565826/55c6ad7b-20c2-4914-af93-e15235cc6a6b">
+<img width="1440" alt="Screenshot4" src="https://github.com/Anju0806/EpicEvents/assets/126565826/5ebf8e3e-66d5-462d-b344-3c2222dfc3d9">
 
 
 ## License
