@@ -22,6 +22,8 @@ Epic Events is a collaborative MERN-stack single-page application designed to si
 
 5. Event Management: Manage your created events effortlessly. Update event details, track count of joined attendees, and even delete events when needed.
 
+6. Epic Events uses integrating email to enhance user engagement with contact Admin option.For additional details on how email notifications work in Epic Events, please refer to the Email Integration Documentation: https://www.emailjs.com/docs/examples/reactjs/
+
 6. Responsive Design using ChakraUI: Epic Events boasts a polished and responsive user interface, ensuring a seamless experience across devices.
 
 7. Interactive UI: Enjoy a highly interactive interface that responds to user input, making event management a breeze.
