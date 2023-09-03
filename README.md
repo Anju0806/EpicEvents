@@ -73,4 +73,7 @@ To run Epic Events locally, follow these steps:
 ## License
 This project is licensed under the MIT License.
 
+## Questions
+If you have any questions about the repo, please open an issue or contact me at anjualfino@gmail.com. 
+
 
