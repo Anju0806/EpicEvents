@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams,Navigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_EVENT } from '../utils/queries';
 import { UPDATE_EVENT } from '../utils/mutations';
@@ -13,7 +13,7 @@ import {
   FormLabel,
   Heading
 } from '@chakra-ui/react';
-
+import Auth from '../utils/auth';
 const UpdateEvent = () => {
   const { eventId } = useParams();
   const { loading, data } = useQuery(QUERY_SINGLE_EVENT, {
@@ -60,6 +60,12 @@ const UpdateEvent = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+  // Check if the user is not logged in and navigate to the home page
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/" />;
+  }
+
+
 
   return (
     <Box

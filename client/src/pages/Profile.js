@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import EventList from '../components/EventList';
 import { Box, Heading, Text } from '@chakra-ui/react';
@@ -7,11 +7,13 @@ import { QUERY_ME, QUERY_EVENTS_CREATED } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const Profile = () => {
+
+
   const { username: userParam } = useParams();
-  
+
   // Fetch the user's data using QUERY_ME
   const { loading: loadingUser, data: userData } = useQuery(QUERY_ME);
-  
+
   // Fetch events_created data using QUERY_EVENTS_CREATED
   const { loading: loadingEventsCreated, data: dataEventsCreated } = useQuery(QUERY_EVENTS_CREATED, {
     variables: { username: userParam },
@@ -23,9 +25,15 @@ const Profile = () => {
 
   const user = userData?.me || {};
   const created_events = dataEventsCreated?.getcreatorevents || {};
-console.log("eventscreated",created_events)
+  console.log("user.username", user.username);
 
-
+  if (!userData) {
+    return <div>User data not found.</div>;
+  }
+  if (!Auth.loggedIn()) {
+    // If the user is not logged in, navigate to the home page
+    return <Navigate to="/" />;
+  }
   // Render user details
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
@@ -44,10 +52,10 @@ console.log("eventscreated",created_events)
           <Text>Username: {user.username}</Text>
           <Text>Email: {user.email}</Text>
         </Box>
-        
+
         {/* Render events_created and events_joined data here */}
         {/* Render events_created */}
-        {(created_events).length===0 ? (
+        {(created_events).length === 0 ? (
           <Text>No events created by {user.username}.</Text>
         ) : (
           <EventList
@@ -61,14 +69,14 @@ console.log("eventscreated",created_events)
           />
         )}
         {/* Render events_joined */}
-        {(user.events).length===0? (
+        {(user.events).length === 0 ? (
           <Text>No events joined by {user.username}.</Text>
         ) : (
           <EventList
             events={user.events}
             updateable={false} // Set this based on your requirements
             title={
-              <Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex">
+              <Box mt={5} bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex">
                 <h3 className="card-header text-black">Events Joined by {user.username}</h3>
               </Box>
             }
