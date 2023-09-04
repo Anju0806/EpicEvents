@@ -1,46 +1,34 @@
 import React from 'react';
-import { Navigate, useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import EventList from '../components/EventList';
-import { Box, Heading, Text, Link as ChakraLink } from '@chakra-ui/react';
-
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
-
+import { Box, Heading, Text } from '@chakra-ui/react';
+import { QUERY_ME, QUERY_EVENTS_CREATED } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const Profile = () => {
   const { username: userParam } = useParams();
-
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  
+  // Fetch the user's data using QUERY_ME
+  const { loading: loadingUser, data: userData } = useQuery(QUERY_ME);
+  
+  // Fetch events_created data using QUERY_EVENTS_CREATED
+  const { loading: loadingEventsCreated, data: dataEventsCreated } = useQuery(QUERY_EVENTS_CREATED, {
     variables: { username: userParam },
   });
 
-  const user = data?.me || data?.user || {};
-
-  // navigate to personal profile page if username is yours
-  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/me" />;
-  }
-
-  if (loading) {
+  if (loadingUser || loadingEventsCreated) {
     return <div>Loading...</div>;
   }
 
-  if (!user?.username) {
-    return (
-      <Box>
-        <Heading as="h4" mb="4">
-          You need to be logged in to see this. Use the navigation links above to
-          sign up or log in!
-        </Heading>
-      </Box>
-    );
-  }
+  const user = userData?.me || {};
+  const created_events = dataEventsCreated?.getcreatorevents || {};
+console.log("eventscreated",created_events)
 
+
+  // Render user details
   return (
-    <Box display="flex"
-      justifyContent="center"
-      alignItems="center">
+    <Box display="flex" justifyContent="center" alignItems="center">
       <Box
         width="100%"
         maxWidth="1000px"
@@ -49,31 +37,43 @@ const Profile = () => {
         borderRadius="md"
         mt={4}
       >
-
-        <Box mb={5} >
+        <Box mb={5}>
           <Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex">
             <h3 className="card-header text-black">Profile Details</h3>
           </Box>
           <Text>Username: {user.username}</Text>
           <Text>Email: {user.email}</Text>
         </Box>
-        {/* Display User's Events */}
-        <Box >
-          {user.events.length === 0 ? (
-            <Text>No events created by {user.username}.</Text>
-          ) : (
-            <EventList
-              events={user.events}
-              updateable={true}
-              // title={`Viewing events created by ${user.username}` }
-              title={<Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex" >
+        
+        {/* Render events_created and events_joined data here */}
+        {/* Render events_created */}
+        {(created_events).length===0 ? (
+          <Text>No events created by {user.username}.</Text>
+        ) : (
+          <EventList
+            events={created_events}
+            updateable={true} // Set this based on your requirements
+            title={
+              <Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex">
                 <h3 className="card-header text-black">Events Created by {user.username}</h3>
-              </Box>}
-            />
-          )}
-        </Box>
-
-        {/* Display Event Form */}
+              </Box>
+            }
+          />
+        )}
+        {/* Render events_joined */}
+        {(user.events).length===0? (
+          <Text>No events joined by {user.username}.</Text>
+        ) : (
+          <EventList
+            events={user.events}
+            updateable={false} // Set this based on your requirements
+            title={
+              <Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex">
+                <h3 className="card-header text-black">Events Joined by {user.username}</h3>
+              </Box>
+            }
+          />
+        )}
       </Box>
     </Box>
   );

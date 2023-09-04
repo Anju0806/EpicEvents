@@ -60,7 +60,8 @@ const Navbar = () => {
           {Auth.loggedIn() ? (
             <>
               <Text p="2">
-                <Link to="/me">{Auth.getProfile().data.username}'s profile</Link>
+              <Link to={`/profile/${Auth.getProfile().data.username}`}>
+                {Auth.getProfile().data.username}'s profile</Link>
               </Text>
               <Text p="2">
                 <Link color="teal.500" to="/addEvent">
@@ -96,7 +97,8 @@ const Navbar = () => {
           {Auth.loggedIn() ? (
             <Flex>
               <Text p="2">
-                <Link to="/me">{Auth.getProfile().data.username}'s profile</Link>
+              <Link to={`/profile/${Auth.getProfile().data.username}`}>
+                {Auth.getProfile().data.username}'s profile</Link>
               </Text>
               <Text p="2">
                 <Link color="teal.500" to="/addEvent">

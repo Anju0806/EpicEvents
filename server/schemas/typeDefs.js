@@ -41,6 +41,7 @@ const typeDefs = gql`
     event(eventId:ID!):Event
     searchevents( search:String, searchdate: String, location: String) : [Event]
     me: User  #returns all joined events of a user
+    getcreatorevents:[Event]
   }
   input EventInput {
     title: String,

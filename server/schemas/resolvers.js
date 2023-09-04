@@ -41,6 +41,33 @@ const resolvers = {
         return User.findOne({ _id: context.user._id }).populate([{ path: 'events', strictPopulate: false }]);
       }
     },
+    getcreatorevents: async (parent,args, context) => {
+      try {
+        // Check if the user is authenticated
+        if (!context.user) {
+          throw new Error("Authentication required to fetch creator events.");
+        }
+    
+        // Retrieve events created by the authenticated user
+        const eventsCreatedByUser = await Event.find({ createdBy: context.user._id })
+          .populate({
+            path: 'attendees', // Replace with the actual field you want to populate
+            select: 'username email', // Specify the fields you want to populate
+          });
+         // return User.find().populate([{ path: 'events', strictPopulate: false }]);
+
+        if (!eventsCreatedByUser) {
+          // Handle the case where no events were found for the user
+          throw new Error("No events found for this user.");
+        }
+    
+        return eventsCreatedByUser;
+      } catch (error) {
+        console.error("Error fetching creator events:", error);
+        throw new Error("Failed to fetch creator events");
+      }
+    },
+    
     //search for events which matches any of the condition(title,description, date btw start_date and end_date,location)
     searchevents: async (parent, args) => {
       let { search, searchdate, location } = args;

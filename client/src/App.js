@@ -73,12 +73,12 @@ function App() {
                 path="/updateevent/:eventId"
                 element={<UpdateEvent />}
               />
-              <Route 
+             {/*  <Route 
                 path="/me"
                 element={<Profile />}
-              />
+              /> */}
               <Route 
-                path="/profiles/:username"
+                path="/profile/:username"
                 element={<Profile />}
               />
               {/* <Route 

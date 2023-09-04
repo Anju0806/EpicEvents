@@ -19,7 +19,7 @@ const Home = () => {
   getEvents();
   }, [])
   useEffect(() => {
-    console.log(data);
+    //console.log(data);
     if(data){
 
       setEvents(data.events);
