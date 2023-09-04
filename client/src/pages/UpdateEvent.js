@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useParams,Navigate } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_SINGLE_EVENT } from '../utils/queries';
 import { UPDATE_EVENT } from '../utils/mutations';
+import FileBase64 from 'react-file-base64';
+import dayjs from 'dayjs';
 import {
   Box,
   Button,
@@ -22,15 +24,16 @@ const UpdateEvent = () => {
     },
   });
 
-  const [updateEvent, { error, updatedata }] = useMutation(UPDATE_EVENT);
+  const [updateEvent, { error, data:dataUpdated }] = useMutation(UPDATE_EVENT);
 
   const [updatedEvent, setUpdatedEvent] = useState({
-    title: '',
+    /* title: '',
     description: '',
     location: '',
     start_date: '',
     end_date: '',
     ticketInformation: '',
+    image: null, */
   });
 
   const handleInputChange = (event) => {
@@ -40,10 +43,19 @@ const UpdateEvent = () => {
       [name]: value,
     }));
   };
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setUpdatedEvent((prevEvent) => ({
+      ...prevEvent,
+      image: file,
+    }));
+  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      console.log("updatedEvent::",updatedEvent)
       const { data } = await updateEvent({
         variables: {
           eventId: eventId,
@@ -73,7 +85,7 @@ const UpdateEvent = () => {
       justifyContent="center"
       alignItems="center">
       <Box
-      backgroundColor={"#F7F8F8"}
+        backgroundColor={"#F7F8F8"}
         width="100%"
         maxWidth="650px"
         padding="4"
@@ -81,7 +93,7 @@ const UpdateEvent = () => {
         borderRadius="md"
         mt={4}
       >
-        {updatedata ? (
+        {dataUpdated ? (
           <p>
             Success! The event has been updated.{' '}
             <Link to="/">Back to the homepage.</Link>
@@ -89,9 +101,9 @@ const UpdateEvent = () => {
         ) : (
           <form onSubmit={handleSubmit}>
 
-<Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex" alignItems="center" justifyContent="center">
-  <h3 className="card-header text-black">Update the Event</h3>
-</Box>
+            <Box bg="#EACB9F" p="2" rounded="md" fontWeight="bold" display="flex" alignItems="center" justifyContent="center">
+              <h3 className="card-header text-black">Update the Event</h3>
+            </Box>
 
 
 
@@ -122,12 +134,13 @@ const UpdateEvent = () => {
               />
             </FormControl>
             <FormControl mb="3" isRequired>
-              <FormLabel>Start Date and Time:</FormLabel>
+              <FormLabel>Start Date:</FormLabel>
+              {event.start_date}
               <Input
                 placeholder="Event Start Date"
                 name="start_date"
                 type="date"
-                defaultValue={event.start_date}
+                value={dayjs(event.start_date).format("YYYY-MM-DD")}
                 onChange={handleInputChange}
                 min={new Date().toISOString().split('T')[0]}
               />
@@ -138,9 +151,9 @@ const UpdateEvent = () => {
                 placeholder="Event End Date"
                 name="end_date"
                 type="date"
-                defaultValue={event.end_date}
+                value={dayjs(event.end_date).format("YYYY-MM-DD")}
                 onChange={handleInputChange}
-                min={event.start_date}
+                min={dayjs(event.start_date).format("YYYY-MM-DD")}
               />
             </FormControl>
             <FormControl mb="3" isRequired>
@@ -153,7 +166,24 @@ const UpdateEvent = () => {
                 onChange={handleInputChange}
               />
             </FormControl>
-            <Button 
+            {/* <FormControl mb="3" >
+              <FormLabel>Event Image:</FormLabel>
+              <Input
+                type="file"
+                name="image" 
+                onChange={handleImageChange} 
+              />
+            </FormControl> */}
+             <FormLabel>Event Image</FormLabel>
+              <FileBase64
+                type="file"
+                multiple={false}
+                onDone={({ base64 }) =>
+                setUpdatedEvent({ ...updatedEvent, image: base64 })
+                }
+              />
+
+            <Button
               type="submit"
               mt="3"
               w="100%">
@@ -165,7 +195,8 @@ const UpdateEvent = () => {
         )}
         {error && (
           <Box mt="3" p="3" bg="red.500" color="white">
-            {error.message}
+            {/* <text>Error: Not Updated, Please try again</text> */}
+             {error.message} 
           </Box>
         )}
       </Box>

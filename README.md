@@ -4,6 +4,7 @@ Epic Events is a collaborative MERN-stack single-page application designed to si
 
 ## Table of Contents
 - Features
+- User Story
 - Getting Started
 - Usage
 - Technologies
@@ -27,6 +28,26 @@ Epic Events is a collaborative MERN-stack single-page application designed to si
 6. Responsive Design using ChakraUI: Epic Events boasts a polished and responsive user interface, ensuring a seamless experience across devices.
 
 7. Interactive UI: Enjoy a highly interactive interface that responds to user input, making event management a breeze.
+
+## User Story
+
+### User Story 1: As an Event Organizer, 
+
+Acceptance Criteria:
+
+1. When I log in to the platform as an event organizer, I should see an option to create a new event.
+2. I should be able to provide details for the new event, including the event title, description, location, start date, end date, and ticket information.
+3. I should be able to upload an event image to make the event visually appealing.
+4. After filling in the event details and clicking the "Create Event" button, the event should be created and visible to others.
+
+### User Story 2: As an Attendee, I Want to Browse and Search for Events
+
+Acceptance Criteria:
+
+1. As an attendee, I should be able to view a list of upcoming events on the platform's homepage.
+2. I should be able to filter and search for events based on criteria such as event title, location, or date.
+3. When I click on an event, I should be able to see detailed information about the event, including its description, date, location, and ticket information.
+4. If I find an event interesting, I should be able to join it.
 
 ## Getting Started
 

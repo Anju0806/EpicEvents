@@ -17,6 +17,7 @@ const Profile = () => {
   // Fetch events_created data using QUERY_EVENTS_CREATED
   const { loading: loadingEventsCreated, data: dataEventsCreated } = useQuery(QUERY_EVENTS_CREATED, {
     variables: { username: userParam },
+    fetchPolicy: 'network-only',
   });
 
   if (loadingUser || loadingEventsCreated) {

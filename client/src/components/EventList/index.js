@@ -4,10 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Heading, Badge, Image, Box, Button, Center } from '@chakra-ui/react';
 import { JOIN_EVENT, DELETE_EVENT } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+//import dateFormat from '../../utils/dateFormat';
 import { SimpleGrid } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faMapMarker } from '@fortawesome/free-solid-svg-icons';
-
+import dayjs from "dayjs";
 const EventList = ({
   events,
   title,
@@ -49,7 +50,24 @@ const EventList = ({
       console.error(error);
     }
   };
-
+  const processDate = (start_date,end_date=null)=>{
+  let start = dayjs(start_date);
+  let end=null
+  if(end_date){
+   end = dayjs(end_date);
+if(start.isSame(end_date,'day')){
+  return `${start.format("DD MMM")}`
+}
+    else if(start.isSame(end_date,'year')){
+      return `${start.format("DD MMM")} to ${end.format("DD MMM")}`
+    }
+    else{
+      return `${start.format("DD MMM YYYY")} to ${end.format("DD MMM YYYY")}`
+    }
+  }else{
+    return `${start.format("DD MMM")}`
+  }
+  }
   const handleJoinEvent = async (eventId) => {
     try {
       if (!Auth.loggedIn()) {
@@ -161,7 +179,8 @@ const EventList = ({
                       alignSelf='start'
 
                     >
-                      {event.start_date} to {event.end_date}
+                      {processDate(event.start_date,event.end_date)}
+                {/*       {dayjs(event.start_date).format("DD MMMM")} to {dayjs(event.end_date).format("DD MMMM")} */}
                     </Box></Link>
                   {/* <Box>
                     <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A' }} />
@@ -223,20 +242,6 @@ const EventList = ({
                   </Button>
                 )}
 
-
-                {/* {updateable &&
-                 <Button width="100%" 
-                 color="gray.600" // Button text color
-                 bg="#EACB9F"    // Button background color
-                 _hover={{
-                  color: "black", // Text color on hover
-                   bg: "red",    // Background color on hover
-                 }}
-                  onClick={() => {
-                    handleDeleteEvent(event._id);
-                  }}
-                >
-                  Delete Event</Button>} */}
                 {updateable && (
                   <Button
                     width="100%"
@@ -253,7 +258,7 @@ const EventList = ({
                     Delete Event
                   </Button>
                 )}
-
+                
               </Box>
             )
           }

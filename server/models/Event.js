@@ -25,12 +25,12 @@ const eventSchema = new mongoose.Schema({
   start_date: {
     type: Date,
     required: true,
-    get: (timestamp) => dateFormat(timestamp),
+    get: (timestamp) => dateFormat(timestamp,{dateSuffix:false}),
   },
   end_date: {
     type: Date,
     required: false,
-    get: (timestamp) => dateFormat(timestamp),
+    get: (timestamp) => dateFormat(timestamp,{dateSuffix:false}),
   },
   start_time: {
     type: String,
