@@ -1,30 +1,32 @@
 
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useApolloClient } from '@apollo/client';
 import EventList from '../components/EventList';
 import SearchForm from '../components/SearchForm';
 import { QUERY_EVENTS, QUERY_SEARCH_EVENTS } from '../utils/queries';
-
+import {
+  Button,
+} from '@chakra-ui/react';
 const Home = () => {
   const client = useApolloClient();
-  const   [getEvents, {loading,error,data}] = useLazyQuery(QUERY_EVENTS,{
+  const [getEvents, { loading, error, data }] = useLazyQuery(QUERY_EVENTS, {
     fetchPolicy: 'network-only', // Doesn't check cache before making a network request
   });
   //const events = eventsData?.events || [];
-  const [events,setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [isSearching, setIsSearching] = useState(false); // Add state for indicating search mode
 
   useEffect(() => {
-  getEvents();
+    getEvents();
   }, [])
   useEffect(() => {
     //console.log(data);
-    if(data){
+    if (data) {
 
       setEvents(data.events);
     }
-    }, [data])
+  }, [data])
 
   const handleSearch = async (search, searchdate, location) => {
     if (!search && !searchdate && !location) {
@@ -60,37 +62,43 @@ const Home = () => {
 
   return (
     <main>
-    <div className="flex-row justify-center">
-       <div className="col-12 col-md-12 mb-3">
-        <SearchForm onSearch={handleSearch} />
-        {isSearching ? ( // Display either search results or original events list
-          <div>
-            <button onClick={handleBackToEvents}>Back to All Events</button>
-            <EventList events={filteredEvents.length > 0 ? filteredEvents : events}  />
-          </div>
-        ) : (
-          
-          <EventList events={events} triggerRefresh={refreshHandler} />
-        )}
-      </div> 
-    </div>
-  </main>
-   /*  <main>
       <div className="flex-row justify-center">
-         <div className="col-12 col-md-12 mb-3">
+        <div className="col-12 col-md-12 mb-3">
           <SearchForm onSearch={handleSearch} />
           {isSearching ? ( // Display either search results or original events list
             <div>
-              <button onClick={handleBackToEvents}>Back to All Events</button>
-              <EventList events={filteredEvents.length > 0 ? filteredEvents : events} title="Join the Event with a click..." />
+
+              <Button mb={'15px'}
+                onClick={handleBackToEvents}
+                ml={'15px'}
+              >
+                Clear Searches
+              </Button>
+              <EventList events={filteredEvents.length > 0 ? filteredEvents : events} />
             </div>
           ) : (
-            
-            <EventList events={events} triggerRefresh={refreshHandler} title="Join the Event with a click..." />
+
+            <EventList events={events} triggerRefresh={refreshHandler} />
           )}
-        </div> 
+        </div>
       </div>
-    </main> */
+    </main>
+    /*  <main>
+       <div className="flex-row justify-center">
+          <div className="col-12 col-md-12 mb-3">
+           <SearchForm onSearch={handleSearch} />
+           {isSearching ? ( // Display either search results or original events list
+             <div>
+               <button onClick={handleBackToEvents}>Back to All Events</button>
+               <EventList events={filteredEvents.length > 0 ? filteredEvents : events} title="Join the Event with a click..." />
+             </div>
+           ) : (
+             
+             <EventList events={events} triggerRefresh={refreshHandler} title="Join the Event with a click..." />
+           )}
+         </div> 
+       </div>
+     </main> */
   );
 };
 

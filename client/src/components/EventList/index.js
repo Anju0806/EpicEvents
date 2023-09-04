@@ -9,6 +9,8 @@ import { SimpleGrid } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import dayjs from "dayjs";
+import { ApolloError } from '@apollo/client';
+
 const EventList = ({
   events,
   title,
@@ -29,44 +31,57 @@ const EventList = ({
 
   // State to keep track of events the user has joined
   const [joinedEvents, setJoinedEvents] = useState(false);
-
+  const [deleteMessageVisible, setDeleteMessageVisible] = useState(false);
   useEffect(() => {
     //  trigger whenever the state changes, updating the button's disabled state.
   }, [joinedEvents]);
 
   const handleDeleteEvent = async (eventId) => {
     try {
+      console.log('eventId to delete', eventId);
       const { data } = await deleteEvent({
         variables: { eventId },
       });
-
+  
       if (data) {
         console.log('Event deleted successfully');
         triggerRefresh();
+        setDeleteMessageVisible(true);
+  
+        // Automatically hide the success message after 5 seconds (5000 milliseconds)
+        setTimeout(() => {
+          setDeleteMessageVisible(false);
+        }, 5000);
       } else {
         console.log('Failed to delete event');
       }
     } catch (error) {
-      console.error(error);
+      if (error instanceof ApolloError) {
+        // Handle ApolloError here
+        console.error('ApolloError:', error.message);
+      } else {
+        console.error('Other error:', error);
+      }
     }
   };
-  const processDate = (start_date,end_date=null)=>{
-  let start = dayjs(start_date);
-  let end=null
-  if(end_date){
-   end = dayjs(end_date);
-if(start.isSame(end_date,'day')){
-  return `${start.format("DD MMM")}`
-}
-    else if(start.isSame(end_date,'year')){
-      return `${start.format("DD MMM")} to ${end.format("DD MMM")}`
+
+  const processDate = (start_date, end_date = null) => {
+    let start = dayjs(start_date);
+    let end = null
+    if (end_date) {
+      end = dayjs(end_date);
+      if (start.isSame(end_date, 'day')) {
+        return `${start.format("DD MMM")}`
+      }
+      else if (start.isSame(end_date, 'year')) {
+        return `${start.format("DD MMM")} to ${end.format("DD MMM")}`
+      }
+      else {
+        return `${start.format("DD MMM YYYY")} to ${end.format("DD MMM YYYY")}`
+      }
+    } else {
+      return `${start.format("DD MMM")}`
     }
-    else{
-      return `${start.format("DD MMM YYYY")} to ${end.format("DD MMM YYYY")}`
-    }
-  }else{
-    return `${start.format("DD MMM")}`
-  }
   }
   const handleJoinEvent = async (eventId) => {
     try {
@@ -179,8 +194,8 @@ if(start.isSame(end_date,'day')){
                       alignSelf='start'
 
                     >
-                      {processDate(event.start_date,event.end_date)}
-                {/*       {dayjs(event.start_date).format("DD MMMM")} to {dayjs(event.end_date).format("DD MMMM")} */}
+                      {processDate(event.start_date, event.end_date)}
+                      {/*       {dayjs(event.start_date).format("DD MMMM")} to {dayjs(event.end_date).format("DD MMMM")} */}
                     </Box></Link>
                   {/* <Box>
                     <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A' }} />
@@ -193,7 +208,7 @@ if(start.isSame(end_date,'day')){
                     rel="noopener noreferrer"
                   >
                     <Box _hover={{ color: '#38714B' }}>
-                      <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A', transition: 'color 0.3s',}} />
+                      <FontAwesomeIcon icon={faMapMarker} style={{ marginRight: '5px', color: '#D0B88A', transition: 'color 0.3s', }} />
                       {event.location}
                       <Box as='span' color='gray.600' fontSize='sm'></Box>
                     </Box>
@@ -258,7 +273,23 @@ if(start.isSame(end_date,'day')){
                     Delete Event
                   </Button>
                 )}
-                
+                {deleteMessageVisible && (
+                  <div
+                    style={{
+                      position: 'fixed',
+                      bottom: '20px',
+                      right: '20px',
+                      backgroundColor: 'green',
+                      color: 'white',
+                      padding: '10px',
+                      borderRadius: '5px',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    }}
+                  >
+                    Event deleted successfully!
+                  </div>
+                )}
+
               </Box>
             )
           }
