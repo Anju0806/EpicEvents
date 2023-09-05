@@ -4,9 +4,11 @@ Epic Events is a collaborative MERN-stack single-page application designed to si
 
 ## Table of Contents
 - Features
+- Deployed Heroku
 - User Story
 - Getting Started
 - Usage
+- The URL of the deployed application 
 - Technologies
 - Screenshots
 - Contributors
@@ -74,6 +76,9 @@ To run Epic Events locally, follow these steps:
 - Event Creation: If you want to host an event, click on the "Create Event" option. Fill in the event details, and your event will be live for others to discover.
 
 - Event Management: For events you've created, you can easily manage them. Edit event details and remove events as needed.
+
+## The URL of the deployed application  
+- https://stormy-beyond-49418-a6aaf45881b7.herokuapp.com/
 
 ## Technologies
 - Frontend: React
